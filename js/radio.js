@@ -1,8 +1,9 @@
 
     
-    var songs = [src="http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-warszawa", src="http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-rock",src="http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-goraca-100"];
-    var poster = ["grafika/poster1.jpg","grafika/poster2.jpg","grafika/poster3.jpg"];
-    var title = ["Eska Warszawa","Eska Rock","Eska gorąca 100"];
+   // var songs = [src="http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-warszawa", src="http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-rock",src="http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-goraca-100"];
+   var songs = [src="3.mp3", src="2.mp3",src="1.mp3"]; 
+   var poster = ["grafika/poster1.jpg","grafika/poster2.jpg","grafika/poster3.jpg"];
+    var title = ["JEDEN","DWA","TRZY"];
     
     var songTitle = document.getElementById("songTitle");
     var fillBar = document.getElementById("fill");
