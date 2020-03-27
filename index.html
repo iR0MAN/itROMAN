@@ -1,98 +1,102 @@
 <!DOCTYPE html>
 <html lang="pl">
-    <head>
-        <meta charset="UTF-8">  <!-- polskie znaki -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--  skalowanie na mobilne -->
-        <link rel="stylesheet" href="css/reset.css"> 
-        <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-        <link href="css/Main.css" rel="stylesheet"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="css/animation.css">
-        <link rel="icon" href="grafika/fav.pszczola.png">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <script src="https://kit.fontawesome.com/94f8bf71d4.js" crossorigin="anonymous"></script>
-      
-        <title> itROMAN  </title>
-    </head>
-        <body>
-             <header> 
-                <nav>  
-                    <div class="burger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    
-                    
-                </nav>
 
-                <hgroup>
-                 <h1> Hej </h1>
-                 <h3> <span>Witaj na mojej stronie! </span> :)  (: </h3>
-                </hgroup>
-                <img src="grafika/L1.png">
-                
-               
-            <div id="arrow"> 
-                <i class="fas fa-angle-double-down"></i>
-            </div> 
+<head>
+    <meta charset="UTF-8"> <!-- polskie znaki -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--  skalowanie na mobilne -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link href="css/Main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="icon" href="grafika/fav.pszczola.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/94f8bf71d4.js" crossorigin="anonymous"></script>
 
-        
-            </header>
-             
-            <main> 
-                <div id="bg">
-                    <div id="blackLayer"></div>
-                    <img src="grafika/Poster1.jpg"/>
-                </div>
-                
-                <div id="main">
-                    <div id="image">
-                        <img src="grafika/Poster1.jpg"/>
-                </div>
+    <title> itROMAN </title>
+</head>
 
-                <div id="player">
-                    <div id="songTitle">Coś poszło nie tak...</div>
-                        <div id="buttons">
-                            <button id="pre" onclick="pre()"><img src="grafika/Pre.png" height="90%" width="90%"/></button>
-                            <button id="play" onclick="playOrPauseSong()"><img src="grafika/Play.png"/></button>
-                            <button id="next" onclick="next()"><img src="grafika/Next.png" height="90%" width="90%"/></button>
-                        </div>
-                        
-                        <div id="volume_icon" > 
-                            <i class="fas fa-volume-up"></i>
-                        </div>
-                        
-                        <div id="volume">     
-                            <input type="range" id="volumeslider" max="100" min="0" step="1" value="100" class="slider"/>
-                        </div>
-        
-                        <div id="currentTime"> 0:00 / 0:00  </div>  
-                        
-                    </div>
+<body>
+    <header>
+        <nav>
+            <div class="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+
+        </nav>
+
+        <hgroup>
+            <h1> Hej </h1>
+            <h3> <span>Witaj na mojej stronie! </span> :) (: </h3>
+        </hgroup>
+        <img src="grafika/L1.png">
+
+
+        <div id="arrow">
+            <i class="fas fa-angle-double-down"></i>
+        </div>
+
+
+    </header>
+
+    <main>
+        <div id="bg">
+            <div id="blackLayer"></div>
+            <img src="grafika/Poster1.jpg" />
+        </div>
+
+        <div id="main_radio">
+            <div id="image">
+                <img src="grafika/Poster1.jpg" />
+            </div>
+
+            <div id="player">
+                <div id="songTitle">Coś poszło nie tak...</div>
+                <div id="buttons">
+                    <button id="pre" onclick="pre()"><img src="grafika/Pre.png" height="90%" width="90%" /></button>
+                    <button id="play" onclick="playOrPauseSong()"><img src="grafika/Play.png" height="90%"
+                            width="90%" /></button>
+                    <button id="next" onclick="next()"><img src="grafika/Next.png" height="90%" width="90%" /></button>
                 </div>
 
-                
+                <div id="volume_icon">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+
+                <div id="volume">
+                    <input type="range" id="volumeslider" max="100" min="0" step="1" value="100" class="slider" />
+                </div>
+
+                <div id="currentTime"> 0:00 / 0:00 </div>
+
+            </div>
+        </div>
+
+    </main>
 
 
 
 
-                
-            </main>
-             
 
-             <footer> </footer>
-        
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-            <script src="js/arrow_burger.js"></script>
-            <script src="js/radio.js"></script>
-            <script src="js/jquery-1.10.2.min.js"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-            <script src="https://kit.fontawesome.com/94f8bf71d4.js" crossorigin="anonymous"></script> 
+    <footer>
 
 
-        </body>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/arrow_burger.js"></script>
+    <script src="js/radio.js"></script>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/94f8bf71d4.js" crossorigin="anonymous"></script>
+
+
+</body>
+
 </html>

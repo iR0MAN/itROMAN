@@ -29,8 +29,8 @@ body {
     z-index: 99;
 }
 
-#main {
-    width: 25%;
+#main_radio {
+    width: 45vh;
     background-color: #fff;
     border-radius: 15px;
     position: absolute;
@@ -96,12 +96,14 @@ body {
     width: 30px;
     height: 30px;
     left: 70%;
+    margin-left: 10px;
 }
 
 #pre {
     width: 30px;
     height: 30px;
     left: 30%;
+    margin-left: -10px;
 }
 
 #play img,
@@ -220,4 +222,133 @@ body {
 #volume_icon {
     text-align: center;
     margin-bottom: 15px;
+}
+
+
+/*  PORTRAIT  */
+
+@media (max-width: 320px) and (max-width: 375px) and (orientation: portrait) {
+    #main_radio {
+        width: 35vh;
+    }
+
+    #next {
+        margin-left: 20px;
+    }
+
+    #pre {
+        margin-left: -20px;
+    }
+}
+
+@media (max-width: 375px) and (orientation: portrait) {
+    #main_radio {
+        width: 35vh;
+    }
+
+    #next {
+        margin-left: 20px;
+    }
+
+    #pre {
+        margin-left: -20px;
+    }
+}
+
+@media (min-width: 768px) and (orientation: portrait) {
+    #main_radio {
+        width: 40vh;
+    }
+
+    #next {
+        margin-left: 20px;
+    }
+
+    #pre {
+        margin-left: -20px;
+    }
+}
+
+
+@media (min-width: 1024px) and (orientation: portrait) {
+    #main_radio {
+        width: 50vh;
+        height: 85vw;
+    }
+
+    #image img {
+        height: 400px;
+    }
+
+    #songTitle {
+        font-size: 38px;
+        top: 54%;
+        left: 50%;
+    }
+
+    #player {
+        margin-top: 130px;
+    }
+
+    #currentTime {
+        font-size: 25px;
+        top: 93%;
+        left: 50%;
+    }
+
+    #buttons {
+        height: 50px;
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .fa-volume-up {
+        font-size: 25px;
+    }
+
+    #volume_icon {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    #play,
+    #next,
+    #pre {
+        width: 80px;
+        height: 80px;
+        border: 0;
+        background-color: royalblue;
+        border-radius: 50%;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+    }
+
+    #next {
+        width: 60px;
+        height: 60px;
+        left: 70%;
+        margin-left: 10px;
+    }
+
+    #pre {
+        width: 60px;
+        height: 60px;
+        left: 30%;
+        margin-left: -10px;
+    }
+
+    #play img,
+    #next img,
+    #pre img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
