@@ -27,7 +27,7 @@ new Vue({
         },
         {
           name: "Sweet Home",
-          artist: "Białas ft. Whtie 2115",
+          artist: "Białas & Whtie 2115",
           cover: "./musicgraphic/bialas.jpg",
           source: "./music/3.mp3",
           url: "https://www.youtube.com/watch?v=zURY9aiun34",
