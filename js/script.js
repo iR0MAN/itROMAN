@@ -66,10 +66,10 @@ new Vue({
           favorited: false
         },
         {
-          name: "Dom",
-          artist: "Pezet",
-          cover: "./musicgraphic/pezet.jpg",
-          source: "./music/8.mp3",
+          name: ":)",
+          artist: "Radio",
+          cover: "./musicgraphic/radio.jpg",
+          source: "http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-warszawa",
           url: "https://www.youtube.com/watch?v=oTUaBIOyLrM",
           favorited: false
         },
