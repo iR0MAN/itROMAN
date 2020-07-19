@@ -225,76 +225,7 @@
   <!-- Odtwarzacz -->
 
 
-  <!-- Blokada -->
-  <script type="text/javascript">
-    ;
-    (function ($, _, undefined) {
 
-
-
-
-      function cTC(e) {
-        var a = document.createElement("input");
-        a.setAttribute("value", document.getElementById(e).innerHTML);
-        document.body.appendChild(a);
-        a.select();
-        document.execCommand("copy");
-        document.body.removeChild(a);
-      }
-      $(document).ready(function () {
-        $(window).keyup(function (e) {
-          if (e.keyCode == 44) {
-            cTC('elCopyright_userLine');
-          };
-        });
-      });
-
-      function intercept(evt) {
-        var e = (evt || window.evt);
-        var c = e.keyCode;
-        var ctrlDown = (e.ctrlKey || e.metaKey);
-
-        if (ctrlDown && evt.altKey) return true
-
-        else if (c == 123) return false // F12
-        else if (c == 122) return false // F11
-        else if (c == 121) return false // F10
-        else if (c == 120) return false // F9
-        else if (c == 119) return false // F8
-        else if (c == 118) return false // F7
-        else if (c == 117) return false // F6
-        else if (c == 116) return false // F5
-        else if (c == 115) return false // F4
-        else if (c == 114) return false // F3
-        else if (c == 113) return false // F2
-        else if (c == 112) return false // F1
-        else if (c == 67 && ctrlDown) return false // copy
-        else if (c == 65 && ctrlDown) return false // all
-        else if (c == 74 && ctrlDown) return false // show download
-        else if (c == 87 && ctrlDown) return false // close card
-        else if (c == 85 && ctrlDown) return false // source
-        else if (c == 80 && ctrlDown) return false // print
-        else if (c == 83 && ctrlDown) return false // save
-      }
-
-      document.onkeydown = function (event) {
-        return intercept(event);
-      }
-
-      function reEnable() {
-        return true
-      }
-      document.oncontextmenu = new Function("return false")
-      if (window.sidebar) {
-        document.onclick = reEnable
-      }
-
-
-
-
-
-    }(jQuery, _));;
-  </script>
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
