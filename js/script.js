@@ -8,8 +8,7 @@ new Vue({
       duration: null,
       currentTime: null,
       isTimerPlaying: false,
-      tracks: [
-        {
+      tracks: [{
           name: "Dreams",
           artist: "A$AP Rocky",
           cover: "./musicgraphic/asap.jpg",
@@ -89,9 +88,9 @@ new Vue({
           url: "https://www.youtube.com/watch?v=UOUBW8bkjQ4",
           favorited: false
         },
-       
-       
-        
+
+
+
       ],
       currentTrack: null,
       currentTrackIndex: 0,
@@ -180,7 +179,7 @@ new Vue({
       this.audio.currentTime = 0;
       this.audio.src = this.currentTrack.source;
       setTimeout(() => {
-        if(this.isTimerPlaying) {
+        if (this.isTimerPlaying) {
           this.audio.play();
         } else {
           this.audio.pause();
@@ -198,13 +197,13 @@ new Vue({
     this.currentTrack = this.tracks[0];
     this.audio = new Audio();
     this.audio.src = this.currentTrack.source;
-    this.audio.ontimeupdate = function() {
+    this.audio.ontimeupdate = function () {
       vm.generateTime();
     };
-    this.audio.onloadedmetadata = function() {
+    this.audio.onloadedmetadata = function () {
       vm.generateTime();
     };
-    this.audio.onended = function() {
+    this.audio.onended = function () {
       vm.nextTrack();
       this.isTimerPlaying = true;
     };
