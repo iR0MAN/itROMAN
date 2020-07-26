@@ -68,7 +68,7 @@ new Vue({
           name: ":)",
           artist: "Radio",
           cover: "./musicgraphic/radio.jpg",
-          source: "http://waw01-01.ic.smcdn.pl:8000/t042-1.mp3",
+          source: "http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-warszawa",
           url: "https://www.youtube.com/watch?v=oTUaBIOyLrM",
           favorited: false
         },
