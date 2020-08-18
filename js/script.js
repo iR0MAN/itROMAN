@@ -1,4 +1,5 @@
 new Vue({
+
   el: "#app",
   data() {
     return {
@@ -97,6 +98,7 @@ new Vue({
       transitionName: null
     };
   },
+
   methods: {
     play() {
       if (this.audio.paused) {
@@ -192,6 +194,8 @@ new Vue({
       ].favorited;
     }
   },
+
+
   created() {
     let vm = this;
     this.currentTrack = this.tracks[0];
@@ -217,5 +221,7 @@ new Vue({
       link.as = "image"
       document.head.appendChild(link)
     }
+
+
   }
 });
