@@ -1,790 +1,383 @@
-* {
-
-    box-sizing: border-box;
-
-}
-
-html {
-    font-size: 10px;
-}
+/* SIATKA STRONY */
 
 body {
-    margin: 0px;
-    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    height: 200vh;
+    min-height: 100vh;
+    background-color: #ddd;
+    color: white;
+}
+
+
+nav {
+    display: flex;
+    background-color: #000;
+    align-self: stretch;
+    z-index: 1;
+    /* flex-basis: 10vh; */
+}
+
+
+footer {
+    background-color: black;
+    align-self: stretch;
+    width: 100%;
+    flex-basis: 10vh;
 }
 
 
 
+
+
+/* GÓRNA BELKA */
+
+
+.top_bar .logo {
+    width: 160px;
+    max-height: 50px;
+
+}
+
+.top_bar {
+    /* position: fixed; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    top: 0px;
+    padding: 0 25px;
+    background-color: black;
+    overflow: hidden;
+    z-index: 2;
+
+}
+
+
+
+
+/* HAMBURGER */
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    box-pack: justify;
+    justify-content: space-between;
+    box-align: center;
+    align-items: center;
+    right: 20px;
+}
+
+
+/* NAWIGACJA  */
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    margin: 50px 0 0;
+    padding: 25px 0 0;
+    width: 100%;
+    background-color: rgba(7, 7, 7, 96%);
+    transition: 0.5s;
+    z-index: 1;
+    top: 0;
+
+}
+
+.navigation li {
+    text-align: center;
+
+
+}
+
+.navigation button {
+    background-color: transparent;
+    width: 50%;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 30px;
+    transition: 0.4s;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    display: inline-block;
+    transition-duration: 0.3s;
+    transition-property: transform;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+}
+
+
+/* ANIMACJA MENU */
+
+
+.navigation button:hover {
+    transform: translateX(-15px);
+    font-size: 17px;
+    text-shadow: 2px 2px black;
+}
+
+.nav-off {
+    top: -500px;
+
+}
+
+
+
+
+
+/* HEADER  */
 
 header {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 100%;
     height: 100vh;
-    width: 100%;
+}
+
+
+
+.text {
+    /* background: linear-gradient(to right top, #8cc7c3, #6bb6c0, #4ea4bf, #3e90bc, #437ab4), url(https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png); */
+    /* background-blend-mode: multiply; */
+    background-size: cover;
+    background-position: center;
     background-color: black;
-    position: fixed;
+    text-align: center;
+    /* flex-basis: 100%;
+    flex-grow: 1;
+    z-index: 0; */
+    top: 50%;
+    width: 100%;
+}
+
+.text img {
+    background-size: cover;
+    width: 100%;
+}
+
+.text h1 {
+    margin: 10vh 3vh 0;
+
+}
+
+.text p {
+    font-size: 13px;
+    margin: 3vh;
+}
+
+div .me_photo {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    margin-top: 10vh;
+
+}
+
+.me_photo img {
+    width: 60%;
     top: 0;
     left: 0;
-    overflow-x: hidden;
-    font-family: 'Raleway', sans-serif;
-    z-index: 3;
+    border-radius: 50%;
+    margin: 0 auto;
 
 }
 
-main {
-    
-    height: 100%;
-    background-color: blanchedalmond;
+
+.pm_me {
     position: relative;
-    margin-top: 100vh;
-    z-index: 4;
-
-}
-
-#bg {
-    height: 100vh;
-    width: 100%;
-    position: absolute;
-    overflow: hidden;
-}
-
-
-
-#blackLayer {
-    height: 100vh;
-    width: 100%;
-    background-color: rgba(0, 0, 0, .2);
-    position: absolute;
-    z-index: 99;
-}
-
-
-
-hgroup {
-    color: white;
-}
-
-
-
-header img {
-    position: absolute;
-    height: 36%;
-    bottom: 0;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    background-image: url('https://webkod.pl/images/para1.png'),
-        url('https://webkod.pl/images/para2.png'),
-        url('https://webkod.pl/images/para3.png');
-    animation: ruch 300s linear infinite alternate;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    z-index: 1;
-    overflow: hidden;
-}
-
-header nav {
-    position: absolute;
-    right: 5%;
-    top: 2%;
-    font-size: 3rem;
-}
-
-
-header h1 {
-    position: absolute;
-    font-size: 3rem;
-    top: 12%;
-    left: 8%;
-}
-
-header h3 {
-    position: absolute;
-    font-size: 2rem;
-    top: 20%;
-    left: 8%;
-}
-
-/*  BURGER */
-
-
-.burger {
-    position: fixed;
+    box-sizing: border-box;
+    border: none;
+    background-color: transparent;
+    left: 50%;
     top: 30px;
-    right: 30px;
-    width: 60px;
-    height: 45px;
-    transition: .2s;
-    transform: scale(0.5);
+    transform: translateX(-50%);
 
 }
 
-.burger.active {
-    transform: rotate(-90deg);
-    transform: scale(0.5);
 
+
+
+
+@media (max-width: 640px) {
+    .text {
+        background-image: url(/grafika/header_bg.jpg);
+    }
 }
 
-.burger span {
-    position: absolute;
-    width: 100%;
-    height: 10px;
-    background-color: yellow;
-    left: 0;
-    transition: top .2s .2s, bottom .2s .2s, opacity .2s .2s, transform .2s .4s;
+@media (min-width: 641px) and (max-width: 1024px) {
+    .text {
+        background-image: url(/grafika/header_bg_1200.jpg);
+    }
 
+    .me_photo img {
+        width: 41%;
+    }
+
+    .text h1 {
+        font-size: 3rem;
+
+    }
+
+    .text p {
+        font-size: 1.5rem;
+
+    }
+
+    .me_photo img {
+        margin: 0px auto;
+    }
 }
 
-.burger span:nth-child(1) {
-    top: 0
-}
+@media (min-width: 1025px) {
+    .text {
+        background-image: url(/grafika/back.png);
+    }
 
-.burger.active span:nth-child(1) {
-    top: calc(50% - 5px);
-    transform: rotate(45deg);
-}
-
-.burger span:nth-child(2) {
-    top: calc(50% - 5px);
-}
-
-.burger.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.burger span:nth-child(3) {
-    bottom: 0;
-}
-
-.burger.active span:nth-child(3) {
-    bottom: calc(50% - 5px);
-    transform: rotate(-45deg);
-}
-
-/*  BURGER */
-
-
-#arrow {
-    height: 50px;
-    width: 50px;
-    position: absolute;
-    border: 3px solid white;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    color: white;
-    font-size: 2.5rem;
-    text-align: center;
-    overflow: hidden;
-    transition: 2s;
-
-}
-
-#arrow:hover {
-    color: yellow;
-
-}
-
-.fa-angle-double-down {
-    animation: arrow 2s infinite linear;
-}
-
-
-
-
-
-/*  ORIENTATION SCALE   */
-
-@media (orientation: portrait) {
-    h3 span::after {
-        content: '\A';
-        white-space: pre;
+    .me_photo img {
+        width: 37%;
     }
 }
 
 
-@media (orientation: landscape) {
-    header img {
+/* FULL SCREEN  */
+
+@media (min-width: 1365px) {
+    .me_photo img {
+        width: 30%;
+    }
+
+
+
+    .navigation {
+        display: flex;
+        /* flex-direction: column; */
         position: absolute;
-        height: 60%;
-        bottom: 0;
-        position: absolute;
-        top: 65%;
-        left: 20%;
-        transform: translate(-50%, -50%);
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
+        margin: 50px 0 0;
+        padding: 25px 0 0;
+        width: 100%;
+        background-color: rgba(7, 7, 7, 96%);
+        transition: 0.5s;
         z-index: 1;
 
     }
+}
 
-    header h3 {
-        position: absolute;
+
+
+
+
+
+
+/* LANDSPACE  */
+
+
+
+@media (min-width: 568px) and (max-width: 638px) and (orientation: landscape) {
+    .navigation button {
+        padding: 17px;
+    }
+
+    .me_photo img {
+        width: 30%;
+
+    }
+
+    .text h1 {
+        font-size: 1.5rem;
+
+    }
+
+    .text p {
+        font-size: 1rem;
+
+    }
+
+    div .me_photo {
+        margin-top: 0;
+    }
+
+}
+
+@media (min-width: 638px) and (max-width: 730px) and (orientation: landscape) {
+    .navigation button {
+        padding: 22px;
+    }
+
+    div .me_photo {
+        margin-top: 8vh;
+    }
+
+    .me_photo img {
+        width: 28%;
+    }
+
+
+    .text h1 {
         font-size: 2rem;
-        top: 25%;
-        left: 8%;
+
     }
 
-    #arrow {
-        height: 50px;
-        width: 50px;
-        position: absolute;
-        border: 3px solid white;
-        top: 75%;
-        left: 75%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        text-align: center;
-        color: white;
-        font-size: 2.5rem;
-        text-align: center;
-        overflow: hidden;
-        transition: 2s;
-    }
-
-
-
-    .burger {
-        transform: scale(0.5);
-    }
-
-    .burger.active {
-
-        transform: scale(0.5);
+    .text p {
+        font-size: 1rem;
 
     }
 }
 
+@media (min-width: 652px) and (max-width: 659px) and (orientation: landscape) {
 
+    .me_photo img {
+        width: 20%;
 
-@media (max-width: 319px) {
-    h3 span::after {
-        content: '\A';
-        white-space: pre;
     }
 
-    header img {
-        position: absolute;
-        height: 220px;
-        width: 220px;
-        bottom: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
-        z-index: 1;
+    div .me_photo {
+        padding: 0;
     }
 
 
-    .burger {
-        transform: scale(0.5);
-    }
-
-    .burger.active {
-
-        transform: scale(0.5);
-
-    }
 }
 
-
-
-/*  RESOLUTIONS    */
-
-@media (min-width: 530px) {
-    header h1 {
-        position: absolute;
-        font-size: 3rem;
-        top: 30%;
-        left: 60%;
+@media (min-width: 731px) and (max-width: 1023px) and (orientation: landscape) {
+    .navigation button {
+        padding: 24px;
     }
 
-    header h3 {
-        position: absolute;
+    div .me_photo {
+        margin-top: 6vh;
+    }
+
+    .me_photo img {
+        width: 28%;
+    }
+
+
+    .text h1 {
         font-size: 2rem;
-        top: 40%;
-        left: 60%;
+
     }
 
-    header img {
-        position: absolute;
-        height: 50%;
-        bottom: 0;
-        position: absolute;
-        top: 50%;
-        left: 30%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-
-
-    .burger {
-        transform: scale(0.5);
-    }
-
-    .burger.active {
-
-        transform: scale(0.5);
+    .text p {
+        font-size: 1rem;
 
     }
 }
 
 
-
-
-@media (min-width: 530px) and (orientation: portrait) {
-    header h1 {
-        position: absolute;
-        font-size: 5rem;
-        top: 10%;
-        left: 10%;
+@media (min-width: 1024px) and (max-width: 1360px) and (orientation: landscape) {
+    div .me_photo {
+        padding: 0px;
+        margin-top: 8vh;
     }
 
-    header h3 {
-        position: absolute;
-        font-size: 3rem;
-        top: 20%;
-        left: 10%;
-    }
-
-    header img {
-        position: absolute;
-        height: 40%;
-        bottom: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-
-
-    #arrow {
-        height: 60px;
-        width: 60px;
-        position: absolute;
-        border: 3px solid white;
-        top: 80%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        text-align: center;
-        color: white;
-        font-size: 2.5rem;
-        overflow: hidden;
-        transition: 2s;
-    }
-
-    .burger {
-        transform: scale(0.5);
-    }
-
-    .burger.active {
-
-        transform: scale(0.5);
-
-    }
-}
-
-
-@media (min-width: 768px) {
-    header img {
-        position: absolute;
-        height: 50%;
-        bottom: 0;
-        position: absolute;
-        top: 50%;
-        left: 30%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-
-
-    .burger {
-        transform: scale(0.5);
-    }
-
-    .burger.active {
-
-        transform: scale(0.5);
-
-    }
-
-}
-
-@media (min-width: 768px) and (orientation: portrait) {
-    header h1 {
-        position: absolute;
-        font-size: 4rem;
-        top: 13%;
-        left: 10%;
-
-    }
-
-    header h3 {
-        position: absolute;
-        font-size: 3rem;
-        top: 19%;
-        left: 10%;
-    }
-
-    header img {
-        position: absolute;
-        height: 45%;
-        bottom: 0;
-        position: absolute;
-        top: 55%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-
-
-    #arrow {
-        height: 50px;
-        width: 50px;
-        position: absolute;
-        border: 3px solid white;
-        top: 85%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        text-align: center;
-        color: white;
-        font-size: 2.5rem;
-        text-align: center;
-        overflow: hidden;
-        transition: 2s;
-    }
-
-    .burger {
-        transform: scale(0.5);
-    }
-
-    .burger.active {
-
-        transform: scale(0.5);
-
-    }
-}
-
-
-@media (min-width: 1024px) {
-    header h1 {
-        position: absolute;
-        font-size: 3rem;
-        top: 30%;
-        left: 60%;
-    }
-
-    header h3 {
-        position: absolute;
-        font-size: 2rem;
-        top: 40%;
-        left: 60%;
-    }
-
-    header img {
-        position: absolute;
-        height: 50%;
-        bottom: 0;
-        position: absolute;
-        top: 50%;
-        left: 30%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-
-
-    #arrow {
-        height: 50px;
-        width: 50px;
-        position: absolute;
-        border: 3px solid white;
-        top: 70%;
-        left: 70%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        text-align: center;
-        color: white;
-        font-size: 2.5rem;
-        text-align: center;
-        overflow: hidden;
-        transition: 2s;
-    }
-
-    .burger {
-        transform: scale(0.5);
-    }
-
-    .burger.active {
-
-        transform: scale(0.5);
-
-    }
-}
-
-@media (min-width: 1024px) and (orientation: portrait) {
-    header h1 {
-        position: absolute;
-        font-size: 5rem;
-        top: 10%;
-        left: 10%;
-
-    }
-
-    header h3 {
-        position: absolute;
-        font-size: 4rem;
-        top: 16%;
-        left: 10%;
-    }
-
-    header img {
-        position: absolute;
-        height: 50%;
-        bottom: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-
-
-    #arrow {
-        height: 70px;
-        width: 70px;
-        position: absolute;
-        border: 3px solid white;
-        top: 85%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        text-align: center;
-        color: white;
-        font-size: 3rem;
-        text-align: center;
-        overflow: hidden;
-        transition: 2s;
-    }
-
-    .burger {
-        transform: scale(0.5);
-    }
-
-    .burger.active {
-
-        transform: scale(0.5);
-
-    }
-}
-
-@media (min-width: 1280px) {
-    header h1 {
-        position: absolute;
-        font-size: 5rem;
-        top: 30%;
-        left: 60%;
-    }
-
-    header h3 {
-        position: absolute;
-        font-size: 4rem;
-        top: 40%;
-        left: 60%;
-    }
-
-    header img {
-        position: absolute;
-        height: 50%;
-        bottom: 0;
-        position: absolute;
-        top: 50%;
-        left: 30%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-
-
-    #arrow {
-        height: 100px;
-        width: 100px;
-        position: absolute;
-        border: 3px solid white;
-        top: 70%;
-        left: 75%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        text-align: center;
-        color: white;
-        font-size: 4rem;
-        text-align: center;
-        overflow: hidden;
-        transition: 2s;
-    }
-
-    .burger {
-        transform: scale(0.5);
-    }
-
-    .burger.active {
-
-        transform: scale(0.5);
-
-    }
-}
-
-@media (min-width: 1280px) and (orientation: portrait) {}
-
-@media (min-width: 1600px) {
-    header h1 {
-        position: absolute;
-        font-size: 5rem;
-        top: 30%;
-        left: 60%;
-    }
-
-    header h3 {
-        position: absolute;
-        font-size: 4rem;
-        top: 40%;
-        left: 60%;
-    }
-
-    header img {
-        position: absolute;
-        height: 50%;
-        bottom: 0;
-        position: absolute;
-        top: 50%;
-        left: 30%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        background-image: url('https://webkod.pl/images/para1.png'),
-            url('https://webkod.pl/images/para2.png'),
-            url('https://webkod.pl/images/para3.png');
-        animation: ruch 300s linear infinite alternate;
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-
-
-    #arrow {
-        height: 100px;
-        width: 100px;
-        position: absolute;
-        border: 3px solid white;
-        top: 70%;
-        left: 75%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        text-align: center;
-        color: white;
-        font-size: 4rem;
-        text-align: center;
-        overflow: hidden;
-        transition: 2s;
-    }
-
-    .burger {
-        transform: scale(0.7);
-    }
-
-    .burger.active {
-
-        transform: scale(0.7);
-
-    }
-}
-
-@media (min-width: 1600px) and (orientation: portrait) {}
-
-
-
-
-
-
-
-@keyframes ruch {
-    0% {
-        background-position: 0 0, 0 0, 0 0;
-    }
-
-
-    100% {
-        background-position: 10000px 0, 8500px 0, 6000px 0;
-    }
-}
-
-
-@keyframes arrow {
-    0% {
-        transform: translateY(-60px)
-    }
-
-    50% {
-        transform: translateY(0px)
-    }
-
-    100% {
-        transform: translateY(80px)
+    .me_photo img {
+        width: 33%;
     }
 }

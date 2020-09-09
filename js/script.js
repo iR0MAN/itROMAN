@@ -7,6 +7,9 @@ new Vue({
       circleLeft: null,
       barWidth: null,
       duration: null,
+      previousVolume: 35,
+      showVolume: true,
+      volume: 100,
       currentTime: null,
       isTimerPlaying: false,
       tracks: [{
@@ -129,8 +132,10 @@ new Vue({
       if (cursec < 10) {
         cursec = "0" + cursec;
       }
+
       this.duration = durmin + ":" + dursec;
       this.currentTime = curmin + ":" + cursec;
+
     },
     updateBar(x) {
       let progress = this.$refs.progress;
@@ -147,6 +152,7 @@ new Vue({
       this.circleLeft = percentage + "%";
       this.audio.currentTime = (maxduration * percentage) / 100;
       this.audio.play();
+
     },
     clickProgress(e) {
       this.isTimerPlaying = true;
@@ -192,9 +198,28 @@ new Vue({
       this.tracks[this.currentTrackIndex].favorited = !this.tracks[
         this.currentTrackIndex
       ].favorited;
-    }
+    },
+
+    // mute() {
+    //   if (this.muted) {
+    //     return this.volume = this.previousVolume;
+    //   }
+
+    //   this.previousVolume = this.volume;
+    //   this.volume = 0;
+    // },
+
+    // muted() {
+    //   return this.volume / 100 === 0;
+    // },
+
   },
 
+  watch: {
+    volume(value) {
+      this.audio.volume = this.volume / 100;
+    }
+  },
 
   created() {
     let vm = this;
@@ -224,4 +249,7 @@ new Vue({
 
 
   }
+
+
+
 });
