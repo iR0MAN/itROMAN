@@ -94,7 +94,7 @@ footer {
 
 .navigation button {
     background-color: transparent;
-    width: 50%;
+    width: 100%;
     border: none;
     color: white;
     text-align: center;
@@ -208,13 +208,13 @@ div .me_photo {
 
 @media (max-width: 640px) {
     .text {
-        background-image: url(/grafika/header_bg.jpg);
+        background-image: url(/itROMAN/grafika/header_bg.jpg);
     }
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
     .text {
-        background-image: url(/grafika/header_bg_1200.jpg);
+        background-image: url(/itROMAN/grafika/header_bg_1200.jpg);
     }
 
     .me_photo img {
@@ -238,7 +238,7 @@ div .me_photo {
 
 @media (min-width: 1025px) {
     .text {
-        background-image: url(/grafika/back.png);
+        background-image: url(/itROMAN/grafika/back.png);
     }
 
     .me_photo img {
