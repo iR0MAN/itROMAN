@@ -23,7 +23,7 @@
     }
 
     .fog-img-first {
-        background-image: url(/itROMAN/grafika/fog1.png);
+        background-image: url(/grafika/fog1.png);
         background-repeat: repeat-x;
         background-size: contain;
         background-position: center;
@@ -31,7 +31,7 @@
     }
 
     .fog-img-second {
-        background-image: url(/itROMAN/grafika/fog2.png);
+        background-image: url(/grafika/fog2.png);
         background-repeat: repeat-x;
         background-size: contain;
         background-position: center;
