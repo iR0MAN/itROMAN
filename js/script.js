@@ -72,7 +72,7 @@ new Vue({
           name: ":)",
           artist: "Radio",
           cover: "./musicgraphic/radio.jpg",
-          source: "http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-warszawa",
+          source: " ",
           url: "https://www.youtube.com/watch?v=oTUaBIOyLrM",
           favorited: false
         },
@@ -250,6 +250,6 @@ new Vue({
 
   }
 
-
+// http://pldm.ml/radio.php?url=https://www.eskago.pl/radio/eska-warszawa
 
 });
