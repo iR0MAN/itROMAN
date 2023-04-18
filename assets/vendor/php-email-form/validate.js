@@ -53,7 +53,7 @@
     fetch(action, {
       method: 'POST',
       body: formData,
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
+      headers: {'X-Requested-With': 'Access-Control-Allow-Origin:https://public.herotofu.com/v1/38b18690-dc56-11ed-b399-c5404916025d'}
     })
     .then(response => {
       if( response.ok ) {
@@ -82,4 +82,5 @@
     thisForm.querySelector('.error-message').classList.add('d-block');
   }
 
+  
 })();
