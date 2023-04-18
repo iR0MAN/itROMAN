@@ -3,13 +3,6 @@
 * URL: https://bootstrapmade.com/php-email-form/
 * Author: BootstrapMade.com
 */
-
-const express = require('express')
-const app = express()
-const cors = require('cors')
-
-app.use(cors({ origin: 'https://public.herotofu.com/v1/38b18690-dc56-11ed-b399-c5404916025d' }))
-
 // Server code 
 
 app.listen(3000)
