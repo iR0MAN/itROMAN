@@ -238,7 +238,7 @@ input:checked ~ .bubble::after {
 
 
 
-@media all and (min-width:400px) and (max-width:500px) {
+@media all and (min-width:370px) and (max-width:500px) {
 	.todo-item .todo-content {
 		flex: 1 1 0%;
 		margin-right: -4rem;
