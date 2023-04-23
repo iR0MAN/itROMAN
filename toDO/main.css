@@ -242,6 +242,11 @@ input:checked ~ .bubble::after {
 	.todo-item .todo-content {
 		flex: 1 1 0%;
 		margin-right: -4rem;
+		
+	}
+
+	.todo-item .actions button {
+		margin: 0.5rem;
 	}
   }
 
