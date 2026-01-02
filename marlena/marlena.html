@@ -13,6 +13,11 @@
         
     </head>
     <body>
+
+<audio id="bg-music" autoplay loop muted>
+    <source src="muzyka.mp3" type="audio/mpeg">
+</audio>
+		
         <div class='moon'>
             <div class='crater1'></div>
             <div class='crater2'></div>
@@ -114,7 +119,27 @@
             </div>
         </div>
         
+<script>
+    const music = document.getElementById("bg-music");
 
+    // próba autoplay po załadowaniu
+    window.addEventListener("load", () => {
+        music.play().then(() => {
+            music.muted = false;
+        }).catch(() => {
+            // jeśli autoplay zablokowany — czekamy na interakcję
+            const enableMusic = () => {
+                music.muted = false;
+                music.play();
+                document.removeEventListener("click", enableMusic);
+                document.removeEventListener("touchstart", enableMusic);
+            };
+
+            document.addEventListener("click", enableMusic);
+            document.addEventListener("touchstart", enableMusic);
+        });
+    });
+</script>
      
 
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
