@@ -265,10 +265,19 @@ h1 + p, p + p {
 }
 }
 
+.container {
+  padding: 40px 20px 20px 20px; /* górny padding 40px, reszta 20px */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  visibility: hidden; /* na start ukryte */
+  margin-top: 20px; /* dodatkowo trochę niżej nagłówka */
+}
+
 /* Małe ekrany, np. iPhone 14 Pro */
 @media (max-width: 500px) {
   .container {
-    padding: 20px;
+    padding: 80px 10px 20px 10px; /* więcej miejsca od góry */
     justify-content: center;
   }
 
@@ -286,7 +295,7 @@ h1 + p, p + p {
 /* Średnie ekrany, np. tablety */
 @media (min-width: 501px) and (max-width: 1023px) {
   .container {
-    padding: 20px;
+    padding: 60px 20px 20px 20px; /* trochę mniejszy top niż na telefonach */
   }
 
   .card {
@@ -300,10 +309,9 @@ h1 + p, p + p {
   }
 }
 
-/* Duże ekrany pozostawiamy standardowe ustawienia */
+/* Duże ekrany */
 @media (min-width: 1024px) {
   .container {
-    padding: 5px;
+    padding: 60px 20px 20px 20px;
   }
 }
-
