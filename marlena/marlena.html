@@ -14,9 +14,7 @@
     </head>
     <body>
 
-<audio id="bg-music" autoplay loop muted>
-    <source src="muzyka.mp3" type="audio/mpeg">
-</audio>
+<audio id="bg-music" src="muzyka.mp3" loop muted></audio>
 		
         <div class='moon'>
             <div class='crater1'></div>
@@ -120,25 +118,23 @@
         </div>
         
 <script>
-    const music = document.getElementById("bg-music");
+const music = document.getElementById("bg-music");
 
-    // próba autoplay po załadowaniu
-    window.addEventListener("load", () => {
-        music.play().then(() => {
-            music.muted = false;
-        }).catch(() => {
-            // jeśli autoplay zablokowany — czekamy na interakcję
-            const enableMusic = () => {
-                music.muted = false;
-                music.play();
-                document.removeEventListener("click", enableMusic);
-                document.removeEventListener("touchstart", enableMusic);
-            };
+// próbujemy autoplay (wyciszone)
+window.addEventListener("load", () => {
+    music.play().catch(() => {
+        // jeśli autoplay zablokowany — czekamy na interakcję
+        const enableMusic = () => {
+            music.muted = false; // odmutowujemy dopiero po kliknięciu
+            music.play();
+            document.removeEventListener("click", enableMusic);
+            document.removeEventListener("touchstart", enableMusic);
+        };
 
-            document.addEventListener("click", enableMusic);
-            document.addEventListener("touchstart", enableMusic);
-        });
+        document.addEventListener("click", enableMusic);
+        document.addEventListener("touchstart", enableMusic);
     });
+});
 </script>
      
 
