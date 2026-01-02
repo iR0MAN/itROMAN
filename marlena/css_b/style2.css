@@ -295,7 +295,7 @@ h1 + p, p + p {
 /* Średnie ekrany, np. tablety */
 @media (min-width: 501px) and (max-width: 1023px) {
   .container {
-    padding: 60px 20px 20px 20px; /* trochę mniejszy top niż na telefonach */
+    padding: 400px 20px 20px 20px; /* trochę mniejszy top niż na telefonach */
   }
 
   .card {
