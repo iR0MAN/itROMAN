@@ -103,7 +103,7 @@ h1 + p, p + p {
 .card-info {
   padding: 20px;
   position: absolute;
-  bottom: -20px;
+  bottom: -10px;
   color: #fff;
   -webkit-transform: translateY(40%);
           transform: translateY(40%);
@@ -123,7 +123,7 @@ h1 + p, p + p {
 .card-info:after {
   content: '';
   position: absolute;
-  top: 0;
+  top: 20px;
   left: 0;
   z-index: 0;
   width: 100%;
