@@ -264,3 +264,46 @@ h1 + p, p + p {
     visibility: hidden;
 }
 }
+
+/* Małe ekrany, np. iPhone 14 Pro */
+@media (max-width: 500px) {
+  .container {
+    padding: 20px;
+    justify-content: center;
+  }
+
+  .card {
+    width: 90%;      /* dopasowanie do szerokości ekranu */
+    height: auto;    /* wysokość dopasowuje się do zawartości */
+    margin: 10px 0;
+  }
+
+  .card-wrap {
+    margin: 10px;
+  }
+}
+
+/* Średnie ekrany, np. tablety */
+@media (min-width: 501px) and (max-width: 1023px) {
+  .container {
+    padding: 20px;
+  }
+
+  .card {
+    width: 200px;
+    height: 300px;
+    margin: 10px;
+  }
+
+  .card-wrap {
+    margin: 10px;
+  }
+}
+
+/* Duże ekrany pozostawiamy standardowe ustawienia */
+@media (min-width: 1024px) {
+  .container {
+    padding: 5px;
+  }
+}
+
