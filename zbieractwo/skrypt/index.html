@@ -17,27 +17,26 @@ ol{padding-left:24px}li{margin:9px 0}code{color:#ffd995}.warning{border-left:4px
 <body><main>
 <header><div style="font-size:44px">⚔️</div><h1>Zbieractwo MAX/h</h1><p>Podział wojska pod największą liczbę surowców na godzinę</p></header>
 <section class="card">
-<h2>Dodaj do paska zakładek</h2>
+<h2>Skopiuj kod do Plemion</h2>
 <a id="bookmarklet" class="bookmark" href="javascript:(function(){var s=document.createElement('script');s.src='https://niewiadomski-art.netlify.app/zbieractwo/skrypt-max-h.js?v='+Date.now();document.head.appendChild(s)})()">Zbieractwo MAX/h</a>
-<button id="copy">Kopiuj kod skrótu</button><div class="ok" id="status"></div>
-<p class="muted" style="font-size:13px">Najłatwiej przeciągnąć złoty przycisk bezpośrednio na pasek zakładek.</p>
+<button id="copy">Kopiuj kod skryptu</button><div class="ok" id="status"></div>
+<p class="muted" style="font-size:13px">Kliknij przycisk „Kopiuj kod skryptu”, a następnie wklej kod w polu „URL celu” w Plemionach.</p>
 </section>
-<section class="card"><h2>Instrukcja — Chrome na komputerze</h2>
+<section class="card"><h2>Jak dodać skrypt do Plemion</h2>
 <ol>
-<li>Włącz pasek zakładek skrótem <code>Ctrl + Shift + B</code>.</li>
-<li>Przeciągnij przycisk <strong>„Zbieractwo MAX/h”</strong> na pasek zakładek.</li>
+<li>Wejdź na stronę <strong>Plemion</strong>.</li>
+<li>Otwórz <strong>Ustawienia → Pasek skrótów</strong>.</li>
+<li>Kliknij <strong>„Dodać nowy wpis”</strong>.</li>
+<li>Na tej stronie kliknij <strong>„Kopiuj kod skryptu”</strong>, a następnie wklej go w Plemionach w pole <strong>„URL celu”</strong>.</li>
+<li>W polu <strong>„Nazwa pozycji”</strong> wpisz dowolną nazwę, np. <strong>Zbieractwo MAX/h</strong>.</li>
+<li>Kliknij <strong>„Zapisz”</strong>.</li>
+</ol></section>
+<section class="card"><h2>Jak używać</h2>
+<ol>
 <li>W Plemionach otwórz <strong>Plac → Zbieractwo</strong>.</li>
-<li>Kliknij zakładkę <strong>„Zbieractwo MAX/h”</strong>.</li>
+<li>Kliknij dodany skrót, np. <strong>„Zbieractwo MAX/h”</strong>.</li>
 <li>Skrypt wpisze najlepszą liczbę jednostek dla pierwszego wolnego poziomu i zaznaczy jego zielony przycisk <strong>Start</strong>.</li>
 <li>Kliknij Start. Skrypt automatycznie przygotuje następny wolny poziom.</li>
-</ol></section>
-<section class="card"><h2>Gdy przeciąganie nie działa</h2>
-<ol>
-<li>Kliknij <strong>„Kopiuj kod skrótu”</strong>.</li>
-<li>Dodaj dowolną nową zakładkę w Chrome.</li>
-<li>Nazwij ją <strong>Zbieractwo MAX/h</strong>.</li>
-<li>W polu adresu usuń dotychczasowy adres i wklej skopiowany kod zaczynający się od <code>javascript:</code>.</li>
-<li>Zapisz zakładkę.</li>
 </ol></section>
 <section class="card"><h2>Jak działa</h2>
 <p>Skrypt używa mnożników poziomów zbieractwa oraz wzoru czasu wyprawy i maksymalizuje łączny wynik <strong>surowce ÷ czas</strong>. Czasy zakończenia poziomów celowo nie są równe.</p>
@@ -49,7 +48,7 @@ ol{padding-left:24px}li{margin:9px 0}code{color:#ffd995}.warning{border-left:4px
 <script>
 const code=document.getElementById('bookmarklet').href;
 document.getElementById('copy').addEventListener('click',async function(){
- try{await navigator.clipboard.writeText(code);status.textContent='Skopiowano — wklej kod jako adres zakładki.'}
- catch(e){status.textContent='Przeciągnij złoty przycisk na pasek zakładek.'}
+ try{await navigator.clipboard.writeText(code);status.textContent='Skopiowano — wklej kod w Plemionach w pole „URL celu”.'}
+ catch(e){status.textContent='Nie udało się skopiować. Skopiuj adres złotego przycisku ręcznie.'}
 });
 </script></body></html>
