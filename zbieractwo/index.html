@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17120d">
+<title>Kalkulator zbieractwa – Plemiona</title>
+<style>
+:root{--bg:#100d09;--card:#211a12;--card2:#17120d;--line:#4b3823;--gold:#efc46e;--gold2:#c99036;--text:#fff7e9;--muted:#bcad98;--green:#70d29a}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,#473019 0,#18120c 40%,var(--bg) 80%);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+main{width:min(760px,100%);margin:auto;padding:24px 13px 48px}.hero{text-align:center;padding:8px 0 22px}.hero div{font-size:44px}.hero h1{margin:4px 0;color:var(--gold);font-size:clamp(27px,7vw,40px)}.hero p{margin:0;color:var(--muted)}
+.card{background:linear-gradient(145deg,#251d14,#18130e);border:1px solid var(--line);border-radius:17px;padding:17px;margin-bottom:14px;box-shadow:0 12px 30px #0005}h2{font-size:18px;margin:0 0 14px;color:var(--gold)}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.levels input{position:absolute;opacity:0}.levels label{display:grid;place-items:center;padding:12px 3px;border:1px solid var(--line);border-radius:11px;background:var(--card2);color:var(--muted);font-weight:800;cursor:pointer}.levels input:checked+label{color:var(--gold);border-color:var(--gold2);background:#3a2917;box-shadow:inset 0 0 0 1px var(--gold2)}
+.units{display:grid;grid-template-columns:1fr 1fr;gap:9px}.unit{display:grid;grid-template-columns:33px 1fr;align-items:center;gap:9px;padding:9px 11px;background:var(--card2);border:1px solid #423321;border-radius:11px}.ico{font-size:23px;text-align:center}.unit label{display:block;color:var(--muted);font-size:12px}.unit input{width:100%;padding:1px 0;border:0;border-bottom:1px solid #5d4931;background:none;color:var(--text);font-size:20px;font-weight:800;outline:0}.unit input:focus{border-color:var(--gold)}
+button{width:100%;margin-top:15px;padding:15px;border:0;border-radius:12px;background:linear-gradient(#f4cd7d,#c98d31);color:#2b1b08;font-size:17px;font-weight:900;cursor:pointer;box-shadow:0 7px 20px #bd7f2944}button:active{transform:translateY(1px)}
+#results{display:none}.summary{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:12px;background:#13100c;border-radius:11px;color:var(--muted);font-size:13px}.summary strong{font-size:19px;color:var(--green);text-align:right}
+.route{margin-top:10px;border:1px solid var(--line);border-radius:13px;overflow:hidden}.route-head{display:flex;justify-content:space-between;padding:10px 12px;background:#352617;color:var(--gold);font-weight:850}.route-body{padding:12px}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{padding:6px 9px;border:1px solid #4a3926;border-radius:8px;background:#15110d;font-weight:750}.meta{display:flex;justify-content:space-between;margin-top:10px;color:var(--muted);font-size:12px}.hint{margin:13px 1px 0;color:var(--muted);font-size:13px}.error{display:none;text-align:center;margin-top:10px;color:#ff928b}.footer{text-align:center;color:#786a58;font-size:12px}
+@media(max-width:520px){.units{grid-template-columns:1fr}.card{padding:15px}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero"><div>⚔️</div><h1>Kalkulator zbieractwa</h1><p>Najlepszy podział wojska w Plemionach</p></header>
+<section class="card">
+<h2>1. Odblokowane poziomy</h2>
+<div class="levels">
+<input type="radio" name="levels" id="l1" value="1"><label for="l1">I</label>
+<input type="radio" name="levels" id="l2" value="2"><label for="l2">I–II</label>
+<input type="radio" name="levels" id="l3" value="3" checked><label for="l3">I–III</label>
+<input type="radio" name="levels" id="l4" value="4"><label for="l4">I–IV</label>
+</div>
+</section>
+<section class="card">
+<h2>2. Dostępne wojsko</h2>
+<div class="units">
+<div class="unit"><span class="ico">🔱</span><div><label for="spear">Pikinierzy</label><input id="spear" type="number" inputmode="numeric" min="0" value="461"></div></div>
+<div class="unit"><span class="ico">🗡️</span><div><label for="sword">Miecznicy</label><input id="sword" type="number" inputmode="numeric" min="0" value="30"></div></div>
+<div class="unit"><span class="ico">🪓</span><div><label for="axe">Topornicy</label><input id="axe" type="number" inputmode="numeric" min="0" value="0"></div></div>
+<div class="unit"><span class="ico">🏹</span><div><label for="archer">Łucznicy</label><input id="archer" type="number" inputmode="numeric" min="0" value="0"></div></div>
+<div class="unit"><span class="ico">🐎</span><div><label for="light">Lekka kawaleria</label><input id="light" type="number" inputmode="numeric" min="0" value="0"></div></div>
+<div class="unit"><span class="ico">🎯</span><div><label for="marcher">Łucznicy na koniu</label><input id="marcher" type="number" inputmode="numeric" min="0" value="0"></div></div>
+<div class="unit"><span class="ico">🛡️</span><div><label for="heavy">Ciężka kawaleria</label><input id="heavy" type="number" inputmode="numeric" min="0" value="0"></div></div>
+</div>
+<button id="calc">Policz najlepszy podział</button>
+<div class="error" id="error">Wpisz przynajmniej jedną jednostkę.</div>
+</section>
+<section class="card" id="results">
+<h2>Gotowy podział</h2>
+<div class="summary"><span>Łączna pojemność wojska</span><strong id="total">0</strong></div>
+<div id="routes"></div>
+<p class="hint">Poziom I celowo dostaje najwięcej wojska — ma najniższy mnożnik łupu. Podział wyrównuje przewidywany czas wypraw i wykorzystuje wszystkie odblokowane poziomy.</p>
+</section>
+<p class="footer">Świat 232 • narzędzie pomocnicze, bez automatyzacji gry</p>
+</main>
+<script>
+const units=[
+{id:'spear',n:'Piki',i:'🔱',c:25},{id:'sword',n:'Miecze',i:'🗡️',c:15},
+{id:'axe',n:'Topory',i:'🪓',c:10},{id:'archer',n:'Łuki',i:'🏹',c:10},
+{id:'light',n:'LK',i:'🐎',c:80},{id:'marcher',n:'ŁNK',i:'🎯',c:50},
+{id:'heavy',n:'CK',i:'🛡️',c:50}
+];
+const factors=[.10,.25,.50,.75], romans=['I','II','III','IV'];
+function split(count,shares){
+ const raw=shares.map(s=>count*s),out=raw.map(Math.floor);
+ let rest=count-out.reduce((a,b)=>a+b,0);
+ raw.map((x,i)=>({i,r:x-Math.floor(x)})).sort((a,b)=>b.r-a.r).slice(0,rest).forEach(x=>out[x.i]++);
+ return out;
+}
+function calculate(){
+ const n=+document.querySelector('[name=levels]:checked').value;
+ const weights=factors.slice(0,n).map(x=>1/x),sum=weights.reduce((a,b)=>a+b,0),shares=weights.map(x=>x/sum);
+ const rows=Array.from({length:n},()=>({}));let countAll=0;
+ units.forEach(u=>{const count=Math.max(0,Math.floor(+document.getElementById(u.id).value||0));countAll+=count;split(count,shares).forEach((v,i)=>rows[i][u.id]=v);localStorage.setItem('zb_'+u.id,count)});
+ error.style.display=countAll?'none':'block';if(!countAll){results.style.display='none';return}
+ const caps=rows.map(r=>units.reduce((s,u)=>s+(r[u.id]||0)*u.c,0));
+ total.textContent=caps.reduce((a,b)=>a+b,0).toLocaleString('pl-PL');
+ routes.innerHTML=rows.map((r,k)=>{
+  const pills=units.filter(u=>r[u.id]).map(u=>'<span class="pill">'+u.i+' '+u.n+': '+r[u.id].toLocaleString('pl-PL')+'</span>').join('');
+  return '<article class="route"><div class="route-head"><span>Zbieractwo '+romans[k]+'</span><span>'+String((shares[k]*100).toFixed(1)).replace('.',',')+'%</span></div><div class="route-body"><div class="pills">'+(pills||'—')+'</div><div class="meta"><span>Pojemność: '+caps[k].toLocaleString('pl-PL')+'</span><span>Mnożnik ×'+String(factors[k]).replace('.',',')+'</span></div></div></article>';
+ }).join('');
+ results.style.display='block';localStorage.setItem('zb_levels',n);
+ setTimeout(()=>results.scrollIntoView({behavior:'smooth',block:'start'}),50);
+}
+calc.addEventListener('click',calculate);
+units.forEach(u=>{const v=localStorage.getItem('zb_'+u.id);if(v!==null)document.getElementById(u.id).value=v});
+const saved=localStorage.getItem('zb_levels');if(saved&&document.getElementById('l'+saved))document.getElementById('l'+saved).checked=true;
+</script>
+</body>
+</html>
