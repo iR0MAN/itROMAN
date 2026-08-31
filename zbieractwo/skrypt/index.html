@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17120d">
+<title>Skrypt zbieractwa MAX/h — instalacja</title>
+<style>
+:root{--bg:#100d09;--card:#211a12;--line:#4b3823;--gold:#efc46e;--text:#fff7e9;--muted:#bcad98;--green:#70d29a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#473019,#18120c 42%,var(--bg) 82%);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+main{width:min(720px,100%);margin:auto;padding:28px 14px 50px}header{text-align:center;margin-bottom:22px}h1{color:var(--gold);font-size:clamp(25px,6vw,38px);margin:6px 0}header p,.muted{color:var(--muted)}
+.card{background:linear-gradient(145deg,#251d14,#18130e);border:1px solid var(--line);border-radius:16px;padding:18px;margin:13px 0;box-shadow:0 12px 30px #0005}h2{margin:0 0 12px;color:var(--gold);font-size:19px}
+.bookmark{display:block;text-align:center;padding:15px;border-radius:11px;background:linear-gradient(#f4cd7d,#c98d31);color:#281a08;text-decoration:none;font-size:18px;font-weight:900;cursor:grab}
+button{width:100%;padding:12px;border:1px solid #80613a;border-radius:10px;background:#332516;color:var(--gold);font-weight:800;cursor:pointer;margin-top:9px}.ok{color:var(--green);min-height:24px;text-align:center;font-size:13px}
+ol{padding-left:24px}li{margin:9px 0}code{color:#ffd995}.warning{border-left:4px solid #d89d3d;padding:10px 12px;background:#2d2114;color:#e7d8c2;border-radius:5px;font-size:13px}.back{display:block;text-align:center;color:var(--gold);margin-top:18px}
+</style>
+</head>
+<body><main>
+<header><div style="font-size:44px">⚔️</div><h1>Zbieractwo MAX/h</h1><p>Podział wojska pod największą liczbę surowców na godzinę</p></header>
+<section class="card">
+<h2>Dodaj do paska zakładek</h2>
+<a id="bookmarklet" class="bookmark" href="javascript:(function(){var s=document.createElement('script');s.src='https://niewiadomski-art.netlify.app/zbieractwo/skrypt-max-h.js?v='+Date.now();document.head.appendChild(s)})()">Zbieractwo MAX/h</a>
+<button id="copy">Kopiuj kod skrótu</button><div class="ok" id="status"></div>
+<p class="muted" style="font-size:13px">Najłatwiej przeciągnąć złoty przycisk bezpośrednio na pasek zakładek.</p>
+</section>
+<section class="card"><h2>Instrukcja — Chrome na komputerze</h2>
+<ol>
+<li>Włącz pasek zakładek skrótem <code>Ctrl + Shift + B</code>.</li>
+<li>Przeciągnij przycisk <strong>„Zbieractwo MAX/h”</strong> na pasek zakładek.</li>
+<li>W Plemionach otwórz <strong>Plac → Zbieractwo</strong>.</li>
+<li>Kliknij zakładkę <strong>„Zbieractwo MAX/h”</strong>.</li>
+<li>Skrypt wpisze najlepszą liczbę jednostek dla pierwszego wolnego poziomu i zaznaczy jego zielony przycisk <strong>Start</strong>.</li>
+<li>Kliknij Start. Skrypt automatycznie przygotuje następny wolny poziom.</li>
+</ol></section>
+<section class="card"><h2>Gdy przeciąganie nie działa</h2>
+<ol>
+<li>Kliknij <strong>„Kopiuj kod skrótu”</strong>.</li>
+<li>Dodaj dowolną nową zakładkę w Chrome.</li>
+<li>Nazwij ją <strong>Zbieractwo MAX/h</strong>.</li>
+<li>W polu adresu usuń dotychczasowy adres i wklej skopiowany kod zaczynający się od <code>javascript:</code>.</li>
+<li>Zapisz zakładkę.</li>
+</ol></section>
+<section class="card"><h2>Jak działa</h2>
+<p>Skrypt używa mnożników poziomów zbieractwa oraz wzoru czasu wyprawy i maksymalizuje łączny wynik <strong>surowce ÷ czas</strong>. Czasy zakończenia poziomów celowo nie są równe.</p>
+<p class="muted">Zachowane zostały ustawienia rezerwy, wybór jednostek, maksymalny czas oraz obsługa telefonu z oryginalnego Asystenta Tilavena.</p>
+<div class="warning"><strong>Ważne:</strong> jest to zmodyfikowana wersja skryptu. Nie dziedziczy automatycznie zatwierdzenia oryginału w oficjalnej Bibliotece skryptów. Przed regularnym użyciem najlepiej zgłosić ją do akceptacji lub potwierdzić z supportem rynku PL.</div>
+</section>
+<a class="back" href="/zbieractwo/">← Wróć do kalkulatora</a>
+</main>
+<script>
+const code=document.getElementById('bookmarklet').href;
+document.getElementById('copy').addEventListener('click',async function(){
+ try{await navigator.clipboard.writeText(code);status.textContent='Skopiowano — wklej kod jako adres zakładki.'}
+ catch(e){status.textContent='Przeciągnij złoty przycisk na pasek zakładek.'}
+});
+</script></body></html>
