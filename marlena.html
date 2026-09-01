@@ -62,29 +62,20 @@
     }
 
     .heart {
-      width: 5.2rem;
-      height: 5.2rem;
-      margin: 0 auto 2.4rem;
-      position: relative;
-      transform: rotate(45deg);
-      border-radius: .7rem;
-      background: linear-gradient(135deg, var(--rose), #ff174f);
-      box-shadow: 0 0 3rem rgba(255, 71, 126, .6);
+      width: 7.2rem;
+      margin: 0 auto 2.1rem;
+      color: var(--rose);
+      filter: drop-shadow(0 0 1.5rem rgba(255, 71, 126, .55));
+      transform-origin: center;
       animation: heartbeat 1.3s ease-in-out infinite;
     }
 
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 5.2rem;
-      height: 5.2rem;
-      border-radius: 50%;
-      background: inherit;
+    .heart svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
     }
-
-    .heart::before { left: -2.6rem; }
-    .heart::after { top: -2.6rem; }
 
     h1 {
       margin: 0;
@@ -149,11 +140,11 @@
     }
 
     @keyframes heartbeat {
-      0%, 100% { transform: rotate(45deg) scale(1); }
-      14% { transform: rotate(45deg) scale(1.12); }
-      28% { transform: rotate(45deg) scale(1); }
-      42% { transform: rotate(45deg) scale(1.09); }
-      70% { transform: rotate(45deg) scale(1); }
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.12); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.08); }
+      70% { transform: scale(1); }
     }
 
     @keyframes float-up {
@@ -202,7 +193,7 @@
   <a class="back" href="index.html" aria-label="Wróć do strony głównej">← Powrót</a>
 
   <main class="card">
-    <div class="heart" aria-hidden="true"></div>
+    <div class="heart" aria-hidden="true"><svg viewBox="0 0 100 92" role="img"><path fill="currentColor" d="M50 88C45 81 10 59 4 35-1 15 12 2 29 2c10 0 17 5 21 13C54 7 61 2 71 2c17 0 30 13 25 33-6 24-41 46-46 53Z"/></svg></div>
     <h1>Kocham <span>Marlenę</span></h1>
     <p class="message">Każdego dnia trochę bardziej. Dziękuję, że jesteś. ❤️</p>
     <p class="signature">— Artur</p>
