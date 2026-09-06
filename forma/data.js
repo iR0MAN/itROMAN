@@ -25,8 +25,38 @@ recipes:[
 ],
 weekly:[['Poniedziałek','b4','l5','s2','d4'],['Wtorek','b2','l3','s2','d6'],['Środa','b1','l5','s5','d5'],['Czwartek','b4','l6','s2','d3'],['Piątek','b5','l5','s2','d3'],['Sobota','b3','l5','s5','d6'],['Niedziela','b4','l1','s2','d6']],
 training:[
-{name:'Poniedziałek — Full Body A',items:[['Wyciskanie sztangi leżąc','3×6–8 · RIR 3→2'],['Leg press','3×8–10 · RIR 3→2'],['Wiosłowanie z podparciem klatki','3×8–10'],['RDL','2×8–10'],['Unoszenie bokiem','3×12–20'],['Prostowanie na wyciągu','2×10–15'],['Uginanie na biceps','2×10–15']]},
-{name:'Środa — Full Body B',items:[['Wyciskanie hantli skos dodatni','3×8–10'],['Ściąganie drążka wyciągu','3×8–12'],['Hack squat / przysiad na maszynie','3×6–10'],['Uginanie nóg leżąc','3×10–15'],['Shoulder press','2×8–10'],['Wiosłowanie na wyciągu','2×10–12'],['Biceps','2×10–15']]},
-{name:'Piątek — Full Body C',items:[['Wyciskanie sztangi leżąc','3×5–7 · technicznie'],['Bułgary / split squat','3×8–10 / noga'],['Ściąganie drążka / podciąganie','3×8–12'],['RDL / martwy na prostych','3×6–8'],['Chest press','2×10–12'],['Unoszenie bokiem','3×12–20'],['Triceps + biceps','2×10–15 każde']]}
+{name:'Poniedziałek — FBW A · akcent klatka',items:[
+['1. Wyciskanie sztangi leżąc — klatka / triceps','3×6–8 · RIR 3 w tyg. 1, potem 2'],
+['2. Wypychanie nóg na suwnicy (leg press) — czworogłowe / pośladki','3×8–10 · RIR 2–3'],
+['3. Wiosłowanie na maszynie z podparciem klatki — plecy','3×8–12 · RIR 2'],
+['4. Uginanie nóg siedząc lub leżąc — tył uda','2×10–15 · RIR 2'],
+['5. Unoszenie hantli bokiem — boczny akton barków','2×12–20 · RIR 1–2'],
+['6. Wspięcia na palce stojąc — łydki','2×10–15 · pauza na dole i górze'],
+['7. Prostowanie ramion na wyciągu górnym z liną — triceps','2×10–15 · RIR 1–2'],
+['8. Uginanie hantli na ławce skośnej — biceps','2×10–15 · RIR 1–2'],
+['9. Spięcia brzucha na wyciągu (cable crunch) — brzuch','2×10–15 · kontrolowany ruch']
+]},
+{name:'Środa — FBW B · akcent martwy ciąg / plecy',items:[
+['1. Martwy ciąg klasyczny — tył ciała / plecy / pośladki','2×4–6 · RIR 3; bez serii do upadku'],
+['2. Wyciskanie hantli na ławce skośnej dodatniej — górna klatka','3×8–10 · RIR 2–3'],
+['3. Ściąganie drążka wyciągu górnego chwytem neutralnym — najszerszy grzbietu','3×8–12 · RIR 2'],
+['4. Przysiad bułgarski — czworogłowe / pośladki','2×8–10 na nogę · RIR 2–3'],
+['5. Wyciskanie hantli siedząc nad głowę — barki','2×8–10 · RIR 2'],
+['6. Wspięcia na palce siedząc — łydki','2×12–15 · pełny zakres'],
+['7. Uginanie ramion ze sztangą EZ — biceps','2×10–15 · RIR 1–2'],
+['8. Prostowanie ramion nad głową na wyciągu z liną — triceps','2×10–15 · RIR 1–2'],
+['9. Unoszenie kolan w zwisie lub na poręczach — brzuch','2×8–15 · bez bujania']
+]},
+{name:'Piątek — FBW C · akcent nogi',items:[
+['1. Hack squat / przysiad na maszynie — czworogłowe / pośladki','3×6–10 · RIR 2–3'],
+['2. Wiosłowanie siedząc na wyciągu dolnym — środek pleców','3×8–12 · RIR 2'],
+['3. Rozpiętki na bramie lub pec deck — klatka','2×10–15 · RIR 1–2'],
+['4. Hip thrust ze sztangą lub na maszynie — pośladki / tył uda','2×8–12 · RIR 2'],
+['5. Odwrotne rozpiętki na maszynie (reverse pec deck) — tylny akton barków','2×12–20 · RIR 1–2'],
+['6. Wspięcia na palce stojąc — łydki','2×10–15 · pełny zakres'],
+['7. Uginanie ramion na modlitewniku — biceps','2×10–15 · RIR 1–2'],
+['8. Prostowanie ramion na wyciągu górnym z liną — triceps','2×10–15 · RIR 1–2'],
+['9. Ab wheel / rollout z kółkiem — brzuch','2×6–12 · nie wyginaj lędźwi']
+]}
 ]
 };
