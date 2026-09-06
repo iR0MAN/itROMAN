@@ -10,3 +10,9 @@ const originalRender=window.renderHistory||renderHistory;
 window.renderHistory=function(){originalRender();const all=getReports();const filter=document.getElementById('monthFilter');if(!filter)return;const current=filter.value||'all';const keys=[...new Set(all.map(monthKey))].sort().reverse();filter.innerHTML='<option value="all">Wszystkie miesiące</option>'+keys.map(k=>`<option value="${k}">${monthLabel(k)}</option>`).join('');filter.value=keys.includes(current)?current:'all';const selected=filter.value==='all'?all:all.filter(r=>monthKey(r)===filter.value);document.getElementById('historyList').innerHTML=selected.length?[...selected].reverse().map(r=>`<div class="history-item"><b>${r.year} · CW ${String(r.cw).padStart(2,'0')}</b><span>${r.avgWeight?.toFixed(2)||'—'} kg</span><span>${r.waist||'—'} cm</span><span>${r.steps||'—'} kroków</span><span class="score">${r.score}/6</span><button class="btn" onclick="showReport('${r.id}')">Pokaż</button></div>`).join(''):'<p class="muted">Brak raportów w wybranym miesiącu.</p>';drawCombined(selected);drawLine('weightChart',selected,'avgWeight','kg','#63d58a');drawLine('waistChart',selected,'waist','cm','#66a9ff');buildTrend(all);};
 document.getElementById('monthFilter')?.addEventListener('change',()=>window.renderHistory());
 })();
+
+// Cloud sync is kept in a separate module so the local dashboard remains usable offline.
+const cloudSyncScript=document.createElement('script');
+cloudSyncScript.src='sync.js';
+cloudSyncScript.defer=true;
+document.body.appendChild(cloudSyncScript);
