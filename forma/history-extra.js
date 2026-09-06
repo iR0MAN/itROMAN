@@ -12,7 +12,17 @@ document.getElementById('monthFilter')?.addEventListener('change',()=>window.ren
 })();
 
 // Cloud sync is kept in a separate module so the local dashboard remains usable offline.
-const cloudSyncScript=document.createElement('script');
-cloudSyncScript.src='sync.js';
-cloudSyncScript.defer=true;
-document.body.appendChild(cloudSyncScript);
+if(!window.formaCloudSync&&!document.getElementById('cloudSyncCard')){
+  const cloudSyncScript=document.createElement('script');
+  cloudSyncScript.src='sync.js';
+  cloudSyncScript.defer=true;
+  document.body.appendChild(cloudSyncScript);
+}
+
+// Editable weekly menu + aggregated shopping list.
+if(!document.getElementById('shoppingCard')){
+  const shoppingScript=document.createElement('script');
+  shoppingScript.src='shopping.js';
+  shoppingScript.defer=true;
+  document.body.appendChild(shoppingScript);
+}
