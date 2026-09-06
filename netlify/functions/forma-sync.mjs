@@ -3,6 +3,7 @@ import { timingSafeEqual } from 'node:crypto';
 
 const STORE_NAME = 'forma-private-data';
 const REPORTS_KEY = 'artur/reports-v1';
+const WEEK_PLAN_KEY = 'artur/week-plan-v1';
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -35,8 +36,23 @@ function mergeReports(cloud = [], incoming = []) {
   return [...map.values()].sort((a, b) => (a.year - b.year) || (a.cw - b.cw));
 }
 
-async function save(store, reports) {
+async function saveReports(store, reports) {
   await store.setJSON(REPORTS_KEY, reports, {
+    metadata: { updatedAt: new Date().toISOString(), version: 1 },
+  });
+}
+
+async function readWeekPlan(store) {
+  try {
+    const data = await store.get(WEEK_PLAN_KEY, { type: 'json', consistency: 'strong' });
+    return data && Array.isArray(data.plan) ? data : null;
+  } catch {
+    return null;
+  }
+}
+
+async function saveWeekPlan(store, weekPlan) {
+  await store.setJSON(WEEK_PLAN_KEY, weekPlan, {
     metadata: { updatedAt: new Date().toISOString(), version: 1 },
   });
 }
@@ -66,6 +82,25 @@ export default async (req) => {
   }
 
   const store = getStore(STORE_NAME);
+
+  if (body.action === 'pull-week') {
+    const weekPlan = await readWeekPlan(store);
+    return json({ ok: true, weekPlan });
+  }
+
+  if (body.action === 'sync-week') {
+    const incoming = body.weekPlan;
+    if (!incoming || !Array.isArray(incoming.plan) || incoming.plan.length !== 7) {
+      return json({ ok: false, error: 'Invalid week plan' }, 400);
+    }
+    const current = await readWeekPlan(store);
+    const incomingTime = Date.parse(incoming.updatedAt || '') || 0;
+    const currentTime = Date.parse(current?.updatedAt || '') || 0;
+    const chosen = current && currentTime > incomingTime ? current : incoming;
+    await saveWeekPlan(store, chosen);
+    return json({ ok: true, weekPlan: chosen, syncedAt: new Date().toISOString() });
+  }
+
   let cloudReports = [];
   try {
     cloudReports = (await store.get(REPORTS_KEY, { type: 'json', consistency: 'strong' })) || [];
@@ -81,7 +116,7 @@ export default async (req) => {
   if (body.action === 'sync') {
     const incoming = Array.isArray(body.reports) ? body.reports : [];
     const merged = mergeReports(cloudReports, incoming);
-    await save(store, merged);
+    await saveReports(store, merged);
     return json({ ok: true, reports: merged, count: merged.length, syncedAt: new Date().toISOString() });
   }
 
@@ -89,7 +124,7 @@ export default async (req) => {
     const id = typeof body.id === 'string' ? body.id : '';
     if (!id) return json({ ok: false, error: 'Missing report id' }, 400);
     const next = cloudReports.filter((report) => report?.id !== id);
-    await save(store, next);
+    await saveReports(store, next);
     return json({ ok: true, reports: next, count: next.length, deleted: id, syncedAt: new Date().toISOString() });
   }
 
