@@ -35,6 +35,12 @@ function mergeReports(cloud = [], incoming = []) {
   return [...map.values()].sort((a, b) => (a.year - b.year) || (a.cw - b.cw));
 }
 
+async function save(store, reports) {
+  await store.setJSON(REPORTS_KEY, reports, {
+    metadata: { updatedAt: new Date().toISOString(), version: 1 },
+  });
+}
+
 export default async (req) => {
   if (req.method !== 'POST') return json({ ok: false, error: 'Method not allowed' }, 405);
 
@@ -75,10 +81,16 @@ export default async (req) => {
   if (body.action === 'sync') {
     const incoming = Array.isArray(body.reports) ? body.reports : [];
     const merged = mergeReports(cloudReports, incoming);
-    await store.setJSON(REPORTS_KEY, merged, {
-      metadata: { updatedAt: new Date().toISOString(), version: 1 },
-    });
+    await save(store, merged);
     return json({ ok: true, reports: merged, count: merged.length, syncedAt: new Date().toISOString() });
+  }
+
+  if (body.action === 'delete') {
+    const id = typeof body.id === 'string' ? body.id : '';
+    if (!id) return json({ ok: false, error: 'Missing report id' }, 400);
+    const next = cloudReports.filter((report) => report?.id !== id);
+    await save(store, next);
+    return json({ ok: true, reports: next, count: next.length, deleted: id, syncedAt: new Date().toISOString() });
   }
 
   return json({ ok: false, error: 'Unknown action' }, 400);
