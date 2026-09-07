@@ -120,3 +120,11 @@ if(!document.getElementById('dashboardRedesignStyles')&&!document.querySelector(
   dashboardScript.defer=true;
   document.body.appendChild(dashboardScript);
 }
+
+// Generated meal illustrations for every recipe card.
+if(!document.getElementById('recipePhotoStyles')&&!document.querySelector('script[src="recipe-images.js"]')){
+  const recipeImages=document.createElement('script');
+  recipeImages.src='recipe-images.js';
+  recipeImages.defer=true;
+  document.body.appendChild(recipeImages);
+}
