@@ -96,3 +96,11 @@ if(!window.formaWorkoutTracker&&!document.getElementById('workouts')){
   workoutTrackerScript.defer=true;
   document.body.appendChild(workoutTrackerScript);
 }
+
+// Cohesive Orchid-inspired visual system for the whole Forma dashboard.
+if(!document.getElementById('formaOrchidTheme')&&!document.querySelector('script[src="orchid-theme.js"]')){
+  const themeScript=document.createElement('script');
+  themeScript.src='orchid-theme.js';
+  themeScript.defer=true;
+  document.body.appendChild(themeScript);
+}
