@@ -104,3 +104,11 @@ if(!document.getElementById('formaOrchidTheme')&&!document.querySelector('script
   themeScript.defer=true;
   document.body.appendChild(themeScript);
 }
+
+// Focused UX/UI redesign for the weekly check-in. Loaded separately to keep form logic untouched.
+if(!document.getElementById('checkinRedesignStyles')&&!document.querySelector('script[src="checkin-redesign.js"]')){
+  const checkinScript=document.createElement('script');
+  checkinScript.src='checkin-redesign.js';
+  checkinScript.defer=true;
+  document.body.appendChild(checkinScript);
+}
