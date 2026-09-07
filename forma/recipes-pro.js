@@ -5,30 +5,7 @@
   if(!root||!grid||!data.length)return;
 
   const catNames={breakfast:'Śniadanie',lunch:'Obiad',snack:'Przekąska',dinner:'Kolacja'};
-  const photo={
-    b1:'https://unsplash.com/photos/Cg-bfzO3v34/download?force=true&w=900',
-    b2:'https://unsplash.com/photos/2h9_d8JPIO0/download?force=true&w=900',
-    b3:'https://unsplash.com/photos/znrUw94Un8E/download?force=true&w=900',
-    b4:'https://unsplash.com/photos/HVa4BCkBl-A/download?force=true&w=900',
-    b5:'https://unsplash.com/photos/Zt-0gWKodXk/download?force=true&w=900',
-    l1:'https://unsplash.com/photos/pvqcYluq7UI/download?force=true&w=900',
-    l2:'https://unsplash.com/photos/WuxzPJqDygU/download?force=true&w=900',
-    l3:'https://unsplash.com/photos/pvqcYluq7UI/download?force=true&w=900',
-    l4:'https://unsplash.com/photos/BxQnDBEBBZQ/download?force=true&w=900',
-    l5:'https://unsplash.com/photos/Ee5FZp9MJlI/download?force=true&w=900',
-    l6:'https://unsplash.com/photos/lKaHOuEce1w/download?force=true&w=900',
-    s1:'https://unsplash.com/photos/znrUw94Un8E/download?force=true&w=900',
-    s2:'https://unsplash.com/photos/HOG77nPyA8Y/download?force=true&w=900',
-    s3:'https://unsplash.com/photos/9Uphjae3YnU/download?force=true&w=900',
-    s4:'https://unsplash.com/photos/qj_zfYm-sdI/download?force=true&w=900',
-    s5:'https://unsplash.com/photos/qTKJDAFFWas/download?force=true&w=900',
-    d1:'https://unsplash.com/photos/lKaHOuEce1w/download?force=true&w=900',
-    d2:'https://unsplash.com/photos/cwqI5PcUsqQ/download?force=true&w=900',
-    d3:'https://unsplash.com/photos/2h9_d8JPIO0/download?force=true&w=900',
-    d4:'https://unsplash.com/photos/qxvhDhjFy4o/download?force=true&w=900',
-    d5:'https://unsplash.com/photos/lKaHOuEce1w/download?force=true&w=900',
-    d6:'https://unsplash.com/photos/cwqI5PcUsqQ/download?force=true&w=900'
-  };
+  const photo=id=>`/.netlify/functions/recipe-photo?id=${encodeURIComponent(id)}&v=20260908-1`;
   const meta={
     b1:['10 min','Łatwe'],b2:['15 min','Łatwe'],b3:['5 min','Bardzo łatwe'],b4:['10 min','Łatwe'],b5:['20 min','Średnie'],
     l1:['30 min','Średnie'],l2:['30 min','Średnie'],l3:['35 min','Łatwe'],l4:['30 min','Średnie'],l5:['30 min','Średnie'],l6:['25 min','Średnie'],
@@ -41,7 +18,7 @@
     const [time,diff]=meta[r.id]||['—','—'];
     return `<article class="recipe-pro" data-id="${r.id}" data-cat="${r.cat}" data-name="${esc(r.name.toLowerCase())}" data-kcal="${r.kcal}">
       <div class="recipe-pro-main">
-        <img class="recipe-pro-photo" src="${photo[r.id]}" alt="${esc(r.name)}" loading="lazy" decoding="async">
+        <img class="recipe-pro-photo" src="${photo(r.id)}" alt="${esc(r.name)}" loading="lazy" decoding="async">
         <div class="recipe-pro-shade"></div>
         <div class="recipe-pro-copy">
           <span class="recipe-pro-cat">${catNames[r.cat]}</span>
@@ -68,7 +45,7 @@
     .recipe-pro{border:1px solid rgba(255,255,255,.09);border-radius:22px;overflow:hidden;background:#0b1016;box-shadow:0 18px 50px rgba(0,0,0,.18);transition:transform .22s ease,border-color .22s ease}
     .recipe-pro:hover{transform:translateY(-2px);border-color:rgba(116,240,167,.22)}
     .recipe-pro-main{position:relative;min-height:255px;overflow:hidden;background:#0b1016}
-    .recipe-pro-photo{position:absolute;inset:0 0 0 auto;width:64%;height:100%;object-fit:cover;object-position:center;transition:transform .35s ease,filter .35s ease}
+    .recipe-pro-photo{position:absolute;inset:0 0 0 auto;width:64%;height:100%;object-fit:cover;object-position:center;transition:transform .35s ease,filter .35s ease;background:#10161d}
     .recipe-pro:hover .recipe-pro-photo{transform:scale(1.035);filter:saturate(1.05) contrast(1.03)}
     .recipe-pro-shade{position:absolute;inset:0;background:linear-gradient(90deg,#0b1016 0%,#0b1016 34%,rgba(11,16,22,.91) 48%,rgba(11,16,22,.35) 70%,rgba(11,16,22,.05) 100%),linear-gradient(0deg,rgba(5,8,12,.36),transparent 52%)}
     .recipe-pro-copy{position:relative;z-index:2;width:60%;min-height:255px;padding:23px 22px;display:flex;flex-direction:column;justify-content:center}
