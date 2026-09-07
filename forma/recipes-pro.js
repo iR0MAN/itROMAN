@@ -5,7 +5,7 @@
   if(!root||!grid||!data.length)return;
 
   const catNames={breakfast:'Śniadanie',lunch:'Obiad',snack:'Przekąska',dinner:'Kolacja'};
-  const photo=id=>`/.netlify/functions/recipe-photo?id=${encodeURIComponent(id)}&v=20260908-1`;
+  const photo=id=>`/forma/images/recipes/${encodeURIComponent(id)}.webp`;
   const meta={
     b1:['10 min','Łatwe'],b2:['15 min','Łatwe'],b3:['5 min','Bardzo łatwe'],b4:['10 min','Łatwe'],b5:['20 min','Średnie'],
     l1:['30 min','Średnie'],l2:['30 min','Średnie'],l3:['35 min','Łatwe'],l4:['30 min','Średnie'],l5:['30 min','Średnie'],l6:['25 min','Średnie'],
