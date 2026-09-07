@@ -26,3 +26,11 @@ if(!document.getElementById('shoppingCard')){
   shoppingScript.defer=true;
   document.body.appendChild(shoppingScript);
 }
+
+// Workout history + live training log.
+if(!window.formaWorkoutTracker&&!document.getElementById('workouts')){
+  const workoutTrackerScript=document.createElement('script');
+  workoutTrackerScript.src='workout-tracker.js';
+  workoutTrackerScript.defer=true;
+  document.body.appendChild(workoutTrackerScript);
+}
