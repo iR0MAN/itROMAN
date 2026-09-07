@@ -112,3 +112,11 @@ if(!document.getElementById('checkinRedesignStyles')&&!document.querySelector('s
   checkinScript.defer=true;
   document.body.appendChild(checkinScript);
 }
+
+// Shared UX/UI language for Planner, Week, Recipes, Training, Workout Journal and History.
+if(!document.getElementById('dashboardRedesignStyles')&&!document.querySelector('script[src="dashboard-redesign.js"]')){
+  const dashboardScript=document.createElement('script');
+  dashboardScript.src='dashboard-redesign.js';
+  dashboardScript.defer=true;
+  document.body.appendChild(dashboardScript);
+}
