@@ -11,6 +11,19 @@ window.renderHistory=function(){originalRender();const all=getReports();const fi
 document.getElementById('monthFilter')?.addEventListener('change',()=>window.renderHistory());
 })();
 
+// The large intro/metrics block belongs only to the Start tab.
+(function(){
+  const hero=document.querySelector('.hero');
+  const nav=document.querySelector('.nav');
+  if(!hero||!nav)return;
+  function syncHero(tab){hero.hidden=tab!=='start';}
+  nav.addEventListener('click',event=>{
+    const button=event.target.closest('.navbtn');
+    if(button)syncHero(button.dataset.tab);
+  });
+  syncHero(document.querySelector('.navbtn.active')?.dataset.tab||'start');
+})();
+
 // Cloud sync is kept in a separate module so the local dashboard remains usable offline.
 if(!window.formaCloudSync&&!document.getElementById('cloudSyncCard')){
   const cloudSyncScript=document.createElement('script');
