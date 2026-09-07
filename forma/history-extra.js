@@ -11,120 +11,35 @@ window.renderHistory=function(){originalRender();const all=getReports();const fi
 document.getElementById('monthFilter')?.addEventListener('change',()=>window.renderHistory());
 })();
 
-// The large intro/metrics block belongs only to the Start tab.
 (function(){
   const hero=document.querySelector('.hero');
   const nav=document.querySelector('.nav');
   if(!hero||!nav)return;
   function syncHero(tab){hero.hidden=tab!=='start';}
-  nav.addEventListener('click',event=>{
-    const button=event.target.closest('.navbtn');
-    if(button)syncHero(button.dataset.tab);
-  });
+  nav.addEventListener('click',event=>{const button=event.target.closest('.navbtn');if(button)syncHero(button.dataset.tab);});
   syncHero(document.querySelector('.navbtn.active')?.dataset.tab||'start');
 })();
 
-// Premium gym artwork replaces the text hero title on Start.
 (function(){
   const title=document.querySelector('.hero h1');
   if(!title)return;
   title.setAttribute('aria-label','Motyw siłowni — sztanga i progres');
-  title.style.width='min(760px,100%)';
-  title.style.margin='.45rem 0 1rem';
-  title.innerHTML=`
-  <svg class="hero-gym-graphic" viewBox="0 0 760 138" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="gymGlow" x1="70" y1="30" x2="690" y2="108" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#63d58a"/>
-        <stop offset="1" stop-color="#66a9ff"/>
-      </linearGradient>
-      <linearGradient id="gymPanel" x1="0" y1="0" x2="760" y2="138" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#101720"/>
-        <stop offset="1" stop-color="#131c28"/>
-      </linearGradient>
-      <filter id="softGlow" x="-30%" y="-60%" width="160%" height="220%">
-        <feGaussianBlur stdDeviation="6" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-    <rect x="1" y="1" width="758" height="136" rx="26" fill="url(#gymPanel)" stroke="#263242"/>
-    <path d="M52 103 C130 102 159 90 214 88 C278 85 294 67 346 66 C410 64 439 80 492 70 C550 60 580 38 708 34" fill="none" stroke="url(#gymGlow)" stroke-width="3" stroke-linecap="round" opacity=".38"/>
-    <path d="M58 111 H704" stroke="#263242" stroke-width="2" stroke-linecap="round"/>
-    <g filter="url(#softGlow)">
-      <rect x="171" y="63" width="418" height="12" rx="6" fill="url(#gymGlow)"/>
-      <rect x="139" y="47" width="30" height="44" rx="7" fill="#dce6ef"/>
-      <rect x="119" y="39" width="18" height="60" rx="7" fill="#8fa2b6"/>
-      <rect x="99" y="31" width="17" height="76" rx="7" fill="#56687a"/>
-      <rect x="591" y="47" width="30" height="44" rx="7" fill="#dce6ef"/>
-      <rect x="623" y="39" width="18" height="60" rx="7" fill="#8fa2b6"/>
-      <rect x="644" y="31" width="17" height="76" rx="7" fill="#56687a"/>
-    </g>
-    <circle cx="380" cy="69" r="28" fill="#0b0f14" stroke="#2d3949" stroke-width="2"/>
-    <path d="M367 78 L380 48 L393 78 M371 68 H389" fill="none" stroke="url(#gymGlow)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="68" cy="101" r="4" fill="#63d58a"/>
-    <circle cx="707" cy="34" r="4" fill="#66a9ff"/>
-    <path d="M676 35 L693 35 L693 52" fill="none" stroke="#66a9ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
-  </svg>`;
-  if(!document.getElementById('heroGymGraphicStyle')){
-    const style=document.createElement('style');
-    style.id='heroGymGraphicStyle';
-    style.textContent=`.hero-gym-graphic{display:block;width:100%;height:auto;max-height:138px}.hero h1:has(.hero-gym-graphic){line-height:0}@media(max-width:580px){.hero-gym-graphic{max-height:116px}}`;
-    document.head.appendChild(style);
-  }
+  title.style.width='min(760px,100%)'; title.style.margin='.45rem 0 1rem';
 })();
 
-// Cloud sync is kept in a separate module so the local dashboard remains usable offline.
-if(!window.formaCloudSync&&!document.getElementById('cloudSyncCard')){
-  const cloudSyncScript=document.createElement('script');
-  cloudSyncScript.src='sync.js';
-  cloudSyncScript.defer=true;
-  document.body.appendChild(cloudSyncScript);
+function loadOnce(src,guard){
+  if((guard&&document.querySelector(guard))||document.querySelector(`script[src="${src}"]`))return;
+  const s=document.createElement('script');s.src=src;s.defer=true;document.body.appendChild(s);
 }
 
-// Editable weekly menu + aggregated shopping list.
-if(!document.getElementById('shoppingCard')){
-  const shoppingScript=document.createElement('script');
-  shoppingScript.src='shopping.js';
-  shoppingScript.defer=true;
-  document.body.appendChild(shoppingScript);
-}
+loadOnce('sync.js','#cloudSyncCard');
+loadOnce('shopping.js','#shoppingCard');
+loadOnce('workout-tracker.js','#workouts');
+loadOnce('orchid-theme.js','#formaOrchidTheme');
+loadOnce('checkin-redesign.js','#checkinRedesignStyles');
+loadOnce('dashboard-redesign.js','#dashboardRedesignStyles');
+loadOnce('recipe-images.js','#recipePhotoStyles');
 
-// Workout history + live training log.
-if(!window.formaWorkoutTracker&&!document.getElementById('workouts')){
-  const workoutTrackerScript=document.createElement('script');
-  workoutTrackerScript.src='workout-tracker.js';
-  workoutTrackerScript.defer=true;
-  document.body.appendChild(workoutTrackerScript);
-}
-
-// Cohesive Orchid-inspired visual system for the whole Forma dashboard.
-if(!document.getElementById('formaOrchidTheme')&&!document.querySelector('script[src="orchid-theme.js"]')){
-  const themeScript=document.createElement('script');
-  themeScript.src='orchid-theme.js';
-  themeScript.defer=true;
-  document.body.appendChild(themeScript);
-}
-
-// Focused UX/UI redesign for the weekly check-in. Loaded separately to keep form logic untouched.
-if(!document.getElementById('checkinRedesignStyles')&&!document.querySelector('script[src="checkin-redesign.js"]')){
-  const checkinScript=document.createElement('script');
-  checkinScript.src='checkin-redesign.js';
-  checkinScript.defer=true;
-  document.body.appendChild(checkinScript);
-}
-
-// Shared UX/UI language for Planner, Week, Recipes, Training, Workout Journal and History.
-if(!document.getElementById('dashboardRedesignStyles')&&!document.querySelector('script[src="dashboard-redesign.js"]')){
-  const dashboardScript=document.createElement('script');
-  dashboardScript.src='dashboard-redesign.js';
-  dashboardScript.defer=true;
-  document.body.appendChild(dashboardScript);
-}
-
-// Generated meal illustrations for every recipe card.
-if(!document.getElementById('recipePhotoStyles')&&!document.querySelector('script[src="recipe-images.js"]')){
-  const recipeImages=document.createElement('script');
-  recipeImages.src='recipe-images.js';
-  recipeImages.defer=true;
-  document.body.appendChild(recipeImages);
-}
+// Final functional layers load last so they own interactions after visual decorators.
+loadOnce('recipes-pro.js','#recipesProStyles');
+loadOnce('week-recipes.js','#weekRecipeStyles');
