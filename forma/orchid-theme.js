@@ -118,11 +118,22 @@
     border-bottom:1px solid rgba(255,255,255,.35)
   }
 
-  .hero-visual{position:relative;min-height:300px;display:grid;place-items:center}
-  .hero-visual svg{width:100%;max-width:520px;height:auto;position:relative;z-index:2}
-  .hero-orbit{position:absolute;border:1px solid rgba(255,255,255,.08);border-radius:50%;inset:4% 0 0 12%;transform:rotate(-11deg)}
-  .hero-orbit.two{inset:19% 8% 8% 2%;transform:rotate(18deg);border-color:rgba(116,240,167,.14)}
-  .hero-glow{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(138,168,255,.17),transparent 68%);filter:blur(4px)}
+  /* Native vector brand mark: steel, graphite and slow orbital motion. */
+  .hero-visual{position:relative;min-height:300px;display:grid;place-items:center;isolation:isolate}
+  .hero-visual svg{width:100%;max-width:520px;height:auto;position:relative;z-index:2;overflow:visible}
+  .hero-orbit{display:none}
+  .hero-glow{position:absolute;width:90%;aspect-ratio:1;border-radius:50%;background:radial-gradient(ellipse,rgba(111,177,201,.12),rgba(116,240,167,.025) 45%,transparent 68%);pointer-events:none}
+  .forma-orbit-system{transform-origin:260px 160px;animation:forma-orbit-drift 24s ease-in-out infinite alternate}
+  .forma-orbit-system.second{animation-duration:31s;animation-direction:alternate-reverse}
+  .forma-planet{offset-path:path('M 480 160 A 220 108 0 1 1 40 160 A 220 108 0 1 1 480 160');offset-rotate:0deg;animation:forma-revolve 26s linear infinite;filter:drop-shadow(0 0 5px #74f0a7)}
+  .forma-planet.blue{offset-path:path('M 460 160 A 200 138 0 1 1 60 160 A 200 138 0 1 1 460 160');animation-duration:38s;animation-direction:reverse;animation-delay:-12s;filter:drop-shadow(0 0 5px #8aa8ff)}
+  .forma-planet.small{animation-duration:26s;animation-delay:-13s;opacity:.65}
+  @keyframes forma-revolve{from{offset-distance:0%}to{offset-distance:100%}}
+  @keyframes forma-orbit-drift{from{transform:rotate(-12deg)}to{transform:rotate(4deg)}}
+  @media(prefers-reduced-motion:reduce){
+    .forma-orbit-system,.forma-planet{animation:none}
+    .forma-planet{offset-distance:18%}.forma-planet.blue{offset-distance:64%}.forma-planet.small{offset-distance:82%}
+  }
 
   .hero-stats{
     position:relative;z-index:3;
@@ -227,23 +238,55 @@
           </div>
           <div class="hero-visual" aria-hidden="true">
             <div class="hero-glow"></div><div class="hero-orbit"></div><div class="hero-orbit two"></div>
-            <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" focusable="false">
               <defs>
-                <linearGradient id="formaBar" x1="72" y1="152" x2="450" y2="152" gradientUnits="userSpaceOnUse"><stop stop-color="#74f0a7"/><stop offset="1" stop-color="#8aa8ff"/></linearGradient>
-                <filter id="formaGlow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <linearGradient id="formaBar"><stop stop-color="#74f0a7"/><stop offset="1" stop-color="#8aa8ff"/></linearGradient>
+                <linearGradient id="formaSteel" x1="0" y1="0" x2="0" y2="1">
+                  <stop stop-color="#34424f"/><stop offset=".18" stop-color="#93a9b6"/><stop offset=".38" stop-color="#e2eaf0"/><stop offset=".48" stop-color="#a0b4c0"/><stop offset=".56" stop-color="#566775"/><stop offset="1" stop-color="#222e38"/>
+                </linearGradient>
+                <linearGradient id="formaPlate" x1="0" y1="0" x2="1" y2=".35">
+                  <stop stop-color="#141d26"/><stop offset=".18" stop-color="#607180"/><stop offset=".3" stop-color="#303e4b"/><stop offset=".72" stop-color="#18222d"/><stop offset="1" stop-color="#080f17"/>
+                </linearGradient>
+                <linearGradient id="formaEdge" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#9fb8c7" stop-opacity=".7"/><stop offset=".5" stop-color="#526776" stop-opacity=".25"/><stop offset="1" stop-color="#131d26"/></linearGradient>
+                <radialGradient id="formaHub" cx=".3" cy=".18" r=".9"><stop stop-color="#263440"/><stop offset=".5" stop-color="#111c25"/><stop offset="1" stop-color="#080e15"/></radialGradient>
+                <pattern id="formaKnurl" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0L5 5M5 0L0 5" stroke="#0a1721" stroke-width=".6" opacity=".35"/></pattern>
+                <filter id="formaShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#000" flood-opacity=".6"/></filter>
               </defs>
-              <path d="M55 250 C129 226 170 238 221 198 C278 153 315 177 370 119 C408 79 440 86 476 58" fill="none" stroke="url(#formaBar)" stroke-width="2.5" opacity=".30"/>
-              <circle cx="55" cy="250" r="5" fill="#74f0a7"/><circle cx="476" cy="58" r="5" fill="#8aa8ff"/>
-              <g filter="url(#formaGlow)">
-                <rect x="112" y="150" width="296" height="14" rx="7" fill="url(#formaBar)"/>
-                <rect x="83" y="117" width="25" height="80" rx="8" fill="#4a5868"/>
-                <rect x="61" y="105" width="17" height="104" rx="8" fill="#27323e"/>
-                <rect x="412" y="117" width="25" height="80" rx="8" fill="#4a5868"/>
-                <rect x="442" y="105" width="17" height="104" rx="8" fill="#27323e"/>
+              <g transform="rotate(18 260 160)">
+                <g class="forma-orbit-system">
+                  <ellipse cx="260" cy="160" rx="220" ry="108" fill="none" stroke="#74f0a7" stroke-opacity=".17" stroke-width=".8"/>
+                  <circle class="forma-planet" r="3.6" fill="#a3ffd0"/>
+                  <circle class="forma-planet small" r="1.8" fill="#a3ffd0"/>
+                </g>
               </g>
-              <circle cx="260" cy="157" r="53" fill="#0a0f15" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
-              <path d="M242 175 L260 133 L278 175 M247 163 H273" fill="none" stroke="url(#formaBar)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M405 77 H442 V114" fill="none" stroke="#8aa8ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>
+              <g transform="rotate(-24 260 160)">
+                <g class="forma-orbit-system second">
+                  <ellipse cx="260" cy="160" rx="200" ry="138" fill="none" stroke="#a5bbf0" stroke-opacity=".16" stroke-width=".8"/>
+                  <circle class="forma-planet blue" r="4" fill="#acc5ff"/>
+                </g>
+              </g>
+              <g filter="url(#formaShadow)">
+                <rect x="31" y="153" width="458" height="14" rx="4" fill="url(#formaSteel)" stroke="#b3cad7" stroke-opacity=".2"/>
+                <rect x="147" y="154" width="226" height="12" rx="2" fill="url(#formaKnurl)"/>
+                <path d="M154 155H366" stroke="#d3e8f0" stroke-opacity=".4"/>
+                <g id="formaPlateStack">
+                  <rect x="53" y="128" width="11" height="64" rx="3" fill="url(#formaSteel)" stroke="#7c939f" stroke-opacity=".3"/>
+                  <rect x="66" y="115" width="15" height="90" rx="5" fill="url(#formaPlate)" stroke="url(#formaEdge)"/>
+                  <rect x="81" y="100" width="23" height="120" rx="7" fill="url(#formaPlate)" stroke="url(#formaEdge)"/>
+                  <rect x="104" y="86" width="30" height="148" rx="9" fill="url(#formaPlate)" stroke="url(#formaEdge)"/>
+                  <path d="M110 96V224" stroke="#b5ccd5" stroke-opacity=".22"/>
+                  <path d="M128 96V224" stroke="#030a12" stroke-width="2"/>
+                  <rect x="137" y="145" width="9" height="30" rx="2" fill="url(#formaSteel)"/>
+                  <path d="M112 102V128" stroke="#91e9c1" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+                  <path d="M86 110V140M71 124V146" stroke="#8cb4b7" stroke-opacity=".25"/>
+                </g>
+                <use href="#formaPlateStack" transform="translate(520 0) scale(-1 1)"/>
+                <circle cx="260" cy="160" r="48" fill="url(#formaHub)" stroke="url(#formaEdge)" stroke-width="1.5"/>
+                <circle cx="260" cy="160" r="41" fill="none" stroke="#b2c9da" stroke-opacity=".09"/>
+                <path d="M229 132A42 42 0 0 1 283 125" fill="none" stroke="url(#formaBar)" stroke-opacity=".5" stroke-linecap="round"/>
+                <path d="M245 175L260 140L275 175M250 165H270" fill="none" stroke="url(#formaBar)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="260" cy="195" r="1.4" fill="#8eabbc" opacity=".6"/>
+              </g>
             </svg>
           </div>
         </div>
