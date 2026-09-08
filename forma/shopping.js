@@ -51,7 +51,7 @@ function parseIngredient(text){
   const raw=m[1].trim(),key=raw.toLowerCase(),name=aliases[key]||raw,amount=parseFloat(m[2].replace(',','.')),unit=m[3].toLowerCase().startsWith('szt')?'szt.':m[3].toLowerCase();
   return{name,amount,unit};
 }
-function groupName(name){const n=name.toLowerCase();if(/kurczak|wołow|łosoś|tuńczyk|szynka/.test(n))return'Mięso i ryby';if(/skyr|jaj|serek|jogurt|mleko|mozzarella/.test(n))return'Nabiał i jajka';if(/ryż|makaron|pieczywo|płatki|tortill|wafle|ziemniak/.test(n))return'Węglowodany i pieczywo';if(/warzyw|banan|owoce|awokado/.test(n))return'Owoce i warzywa';return'Dodatki';}
+function groupName(name){const n=name.toLowerCase();if(/kurczak|wołow|łosoś|tuńczyk|makrela|szynka/.test(n))return'Mięso i ryby';if(/skyr|jaj|serek|jogurt|mleko|mozzarella/.test(n))return'Nabiał i jajka';if(/ryż|makaron|pieczywo|płatki|tortill|wafle|ziemniak/.test(n))return'Węglowodany i pieczywo';if(/warzyw|banan|owoce|awokado|pomidory|cebula|czosnek|ogórek/.test(n))return'Owoce i warzywa';return'Dodatki';}
 function aggregate(){
   const map=new Map();
   state.plan.forEach(d=>cats.forEach(([cat])=>{const r=recipeById[d[cat]];if(!r)return;(r.ingredients||[]).forEach(txt=>{const x=parseIngredient(txt),key=x.name.toLowerCase()+'|'+x.unit;if(!map.has(key))map.set(key,{...x});else if(Number.isFinite(x.amount))map.get(key).amount=(map.get(key).amount||0)+x.amount;});}));

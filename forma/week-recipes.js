@@ -32,7 +32,7 @@
 
   function showRecipe(id){
     const r=byId[id]; if(!r)return;
-    body.innerHTML=`<div class="week-recipe-top"><div><span class="week-recipe-kicker">${catLabel[r.cat]||'Posiłek'}</span><h3>${esc(r.name)}</h3></div><button class="week-recipe-x" type="button" aria-label="Zamknij">×</button></div><div class="week-recipe-macros"><div><span>Kalorie</span><strong>${r.kcal} kcal</strong></div><div><span>Białko</span><strong>${r.p} g</strong></div><div><span>Tłuszcz</span><strong>${r.f} g</strong></div><div><span>Węgle</span><strong>${r.c} g</strong></div></div><div class="week-recipe-content"><div><h4>Ile czego użyć</h4><ul>${r.ingredients.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div><h4>Jak przygotować</h4><ol>${r.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></div>`;
+    body.innerHTML=`<div class="week-recipe-top"><div><span class="week-recipe-kicker">${catLabel[r.cat]||'Posiłek'}</span><h3>${esc(r.name)}</h3></div><button class="week-recipe-x" type="button" aria-label="Zamknij">×</button></div><div class="week-recipe-macros"><div><span>Kalorie</span><strong>${r.kcal} kcal</strong></div><div><span>Białko</span><strong>${r.p} g</strong></div><div><span>Tłuszcz</span><strong>${r.f} g</strong></div><div><span>Węgle</span><strong>${r.c} g</strong></div></div>${r.nutritionNote?`<p class="micro" style="padding:0 24px">${esc(r.nutritionNote)}</p>`:''}<div class="week-recipe-content"><div><h4>Ile czego użyć</h4><ul>${r.ingredients.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div><h4>Jak przygotować</h4><ol>${r.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></div>`;
     modal.hidden=false; document.body.style.overflow='hidden';
     body.querySelector('.week-recipe-x').onclick=closeModal;
   }

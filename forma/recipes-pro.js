@@ -15,7 +15,7 @@
 
   function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[m]));}
   function renderCard(r){
-    const [time,diff]=meta[r.id]||['—','—'];
+    const [time,diff]=r.time?[r.time,r.difficulty||'Łatwe']:(meta[r.id]||['—','—']);
     return `<article class="recipe-pro" data-id="${r.id}" data-cat="${r.cat}" data-name="${esc(r.name.toLowerCase())}" data-kcal="${r.kcal}">
       <div class="recipe-pro-main">
         <img class="recipe-pro-photo" src="${photo(r.id)}" alt="${esc(r.name)}" loading="lazy" decoding="async">
@@ -29,6 +29,7 @@
         <button class="recipe-pro-open" type="button" aria-expanded="false" aria-label="Pokaż przepis na ${esc(r.name)}">→</button>
       </div>
       <div class="recipe-pro-detail" hidden>
+        ${r.nutritionNote?`<p class="micro">${esc(r.nutritionNote)}${r.nutritionSource?` <a href="${esc(r.nutritionSource.url)}" target="_blank" rel="noopener noreferrer">${esc(r.nutritionSource.label)}</a>`:''}</p>`:''}
         <div class="recipe-detail-head"><div><span class="recipe-detail-kicker">Przepis</span><h4>${esc(r.name)}</h4></div><button class="recipe-pro-close" type="button">Zwiń ×</button></div>
         <div class="recipe-detail-grid">
           <div><h5>Składniki</h5><ul>${r.ingredients.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
