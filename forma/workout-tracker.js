@@ -15,6 +15,29 @@ const seedWorkout={
   ]
 };
 
+const extraSeedWorkouts=[
+  {
+    id:'2026-09-09-full-body',
+    date:'2026-09-09',
+    name:'Full Body',
+    note:'Trening prowadzony na żywo. Na koniec 12–15 min spokojnego marszu na bieżni, nachylenie ok. 6–10%, tempo 4,5–5,5 km/h.',
+    exercises:[
+      {name:'Wyciskanie sztangi na ławce płaskiej',unit:'kg',sets:[{w:80,r:8},{w:80,r:8},{w:75,r:8}],note:'Dwie pełne serie 80×8. Back-off 75×8.'},
+      {name:'Lat pulldown',unit:'kg',sets:[{w:35,r:8},{w:35,r:7},{w:35,r:8}],note:'Trzy serie robocze na 35 kg.'},
+      {name:'Dumbbell curl',unit:'kg / hantel',sets:[{w:15,r:9},{w:15,r:8}],note:'Druga seria ciężka pod koniec. Trzecia seria nie została zapisana.'},
+      {name:'Rope pushdown',unit:'kg',sets:[{w:17.5,r:18},{w:21.25,r:12},{w:21.25,r:8}],note:'12. powtórzenie przy 21,25 kg było już wymęczone; ostatnia seria zakończona na 8.'},
+      {name:'Shoulder press machine — siedząc',unit:'kg',sets:[{w:20,r:13},{w:20,r:12}],note:'Powrót po przerwie. Następny trening: wejście na 25 kg, jeśli technika i zakres ruchu zostają czyste.'}
+    ]
+  },
+  {
+    id:'2026-09-10-mma',
+    date:'2026-09-10',
+    name:'MMA — 1 godzina',
+    note:'Trening MMA: 60 minut.',
+    exercises:[]
+  }
+];
+
 function esc(v=''){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function read(){
   try{
@@ -25,7 +48,11 @@ function read(){
 function write(data){localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}
 function seed(){
   const data=read();
-  if(!data.some(w=>w.id===TODAY_ID)){data.push(seedWorkout);write(data);}
+  let changed=false;
+  [seedWorkout,...extraSeedWorkouts].forEach(workout=>{
+    if(!data.some(w=>w.id===workout.id)){data.push(workout);changed=true;}
+  });
+  if(changed)write(data);
 }
 function formatDate(s){
   const [y,m,d]=s.split('-').map(Number);
