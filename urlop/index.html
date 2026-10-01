@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d1412">
+<title>Urlop — rzeczy do zrobienia</title>
+<meta name="description" content="Dwutygodniowy planer urlopu: zadania, kalendarz, checklista i postęp.">
+<style>
+:root{
+  --bg:#0d1412;--bg2:#121c18;--card:#17231e;--card2:#1b2a24;--line:#2c4037;
+  --text:#f3f7f4;--muted:#9eafa7;--green:#75e6a5;--mint:#b9ffd4;--blue:#86b7ff;
+  --amber:#ffc66c;--red:#ff8c8c;--shadow:0 24px 70px #0007;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(800px 500px at 20% -10%,#1e4b3b55,transparent 65%),
+    radial-gradient(900px 600px at 100% 0,#1d365e44,transparent 70%),
+    linear-gradient(180deg,var(--bg),#0b1110 70%);
+  min-height:100vh;
+}
+button,input,select{font:inherit}
+button,a,input,select{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+a{color:inherit}
+.wrap{width:min(1280px,calc(100% - 28px));margin:auto}
+.top{
+  position:sticky;top:0;z-index:20;background:#0d1412d9;backdrop-filter:blur(16px);
+  border-bottom:1px solid #ffffff12;
+}
+.nav{display:flex;align-items:center;gap:10px;padding:12px 0;overflow:auto}
+.brand{font-weight:900;white-space:nowrap;margin-right:auto;display:flex;align-items:center;gap:10px}
+.logo{
+  width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#2a4d3c,#173226);box-shadow:inset 0 0 0 1px #ffffff16,0 8px 30px #0005;
+}
+.logo:before{content:"✓";color:var(--mint);font-size:20px;font-weight:1000}
+.btn,.nav a,.nav button{
+  border:1px solid var(--line);background:#14211c;color:var(--text);
+  border-radius:12px;padding:9px 12px;text-decoration:none;font-weight:750;white-space:nowrap;
+}
+.btn:hover,.nav a:hover,.nav button:hover{background:#1a2a23}
+.hero{padding:56px 0 26px;display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch}
+.hero-copy,.hero-art{border:1px solid #ffffff14;border-radius:26px;overflow:hidden}
+.hero-copy{
+  padding:34px;background:linear-gradient(155deg,#192820dd,#121b18d9);
+  position:relative;box-shadow:var(--shadow)
+}
+.hero-copy:after{
+  content:"";position:absolute;inset:auto -60px -120px auto;width:320px;height:320px;border-radius:50%;
+  border:1px solid #75e6a522;box-shadow:0 0 0 32px #75e6a50a,0 0 0 70px #75e6a507;
+  animation:float 9s ease-in-out infinite alternate;
+}
+.eyebrow{color:var(--green);font-size:.78rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+h1{font-size:clamp(2.8rem,6vw,5.4rem);line-height:.93;letter-spacing:-.05em;margin:18px 0 18px;max-width:780px}
+h1 em{font-style:normal;color:var(--green)}
+.lead{font-size:1.02rem;color:var(--muted);max-width:700px;margin:0 0 20px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;position:relative;z-index:2}
+.primary{background:linear-gradient(135deg,#76e6a5,#59c88b)!important;color:#0b1711!important;border-color:transparent!important}
+.hero-art{
+  min-height:410px;position:relative;
+  background:
+   radial-gradient(circle at 70% 25%,#7ee6aa22,transparent 35%),
+   linear-gradient(160deg,#16261f,#0e1714 75%);
+  box-shadow:var(--shadow)
+}
+.orbit{position:absolute;border:1px solid #ffffff16;border-radius:50%;inset:10% 9%;animation:spin 28s linear infinite}
+.orbit.o2{inset:22% 21%;animation-duration:19s;animation-direction:reverse}
+.orbit:before{content:"";position:absolute;top:-6px;left:46%;width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 24px #75e6a5}
+.calendar-visual{position:absolute;inset:17% 14%;display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:1fr;gap:8px;transform:rotate(-3deg)}
+.calendar-visual span{
+  display:grid;place-items:center;border-radius:10px;background:#ffffff08;border:1px solid #ffffff10;
+  color:#9eb0a7;font-size:12px
+}
+.calendar-visual span:nth-child(6),.calendar-visual span:nth-child(12),.calendar-visual span:nth-child(15),.calendar-visual span:nth-child(20),.calendar-visual span:nth-child(27){
+  background:#75e6a51a;color:var(--mint);border-color:#75e6a544
+}
+.art-label{position:absolute;left:22px;bottom:18px;color:#82958c;font-size:12px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 26px}
+.metric{padding:18px;border-radius:18px;background:#111a17aa;border:1px solid #ffffff12}
+.metric strong{display:block;font-size:1.6rem}
+.metric span{color:var(--muted);font-size:.82rem}
+.toolbar{
+  display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  margin:18px 0
+}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter{
+  padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#131f1a;color:var(--muted);font-weight:750
+}
+.filter.active{color:#0a1710;background:var(--green);border-color:var(--green)}
+.progress-box{margin:20px 0 30px}
+.progress-line{height:8px;background:#ffffff0c;border-radius:999px;overflow:hidden;border:1px solid #ffffff0b}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .35s ease}
+.progress-copy{display:flex;justify-content:space-between;color:var(--muted);font-size:.82rem;margin-top:8px}
+.layout{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;padding-bottom:54px}
+.panel{background:linear-gradient(180deg,#16231ddd,#121b18e8);border:1px solid #ffffff12;border-radius:22px;padding:20px}
+.panel h2{font-size:1.35rem;margin:0 0 4px}.panel p.sub{margin:0;color:var(--muted);font-size:.88rem}
+.task-groups{display:grid;gap:14px;margin-top:18px}
+.group{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#101915}
+.group-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 15px;border-bottom:1px solid #ffffff0c}
+.group-head b{display:flex;align-items:center;gap:9px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px #75e6a512}
+.task{display:grid;grid-template-columns:24px minmax(0,1fr) 160px 34px;gap:10px;align-items:center;padding:13px 14px;border-top:1px solid #ffffff09}
+.task:first-of-type{border-top:0}
+.task.done .title{text-decoration:line-through;color:#6f7f78}
+.task input[type=checkbox]{width:18px;height:18px;accent-color:var(--green)}
+.title{font-weight:760}.meta{color:var(--muted);font-size:.76rem;margin-top:2px}
+.date-select{width:100%;background:#0f1714;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:8px}
+.iconbtn{width:34px;height:34px;border:1px solid #ffffff12;border-radius:10px;background:#111a17;color:#83958c}
+.iconbtn:hover{color:#fff;background:#24352e}
+.quick-link{display:inline-block;color:var(--green);font-size:.76rem;margin-top:5px;text-decoration:none}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:18px}
+.dow{text-align:center;color:#6f8178;font-size:.7rem;text-transform:uppercase;font-weight:900}
+.day{min-height:125px;border-radius:15px;border:1px solid #ffffff10;background:#101915;padding:10px;position:relative}
+.day.weekend{background:#121917}
+.day strong{font-size:.82rem}
+.day small{display:block;color:#74867d;font-size:.68rem}
+.day.today{border-color:#75e6a544;box-shadow:inset 0 0 0 1px #75e6a51a}
+.day-tasks{display:grid;gap:5px;margin-top:8px}
+.chip{font-size:.68rem;line-height:1.25;padding:6px 7px;border-radius:8px;background:#75e6a514;border:1px solid #75e6a526;color:#c8ffdb}
+.chip.done{opacity:.45;text-decoration:line-through}
+.addbox{display:grid;grid-template-columns:1fr 150px 130px auto;gap:8px;margin-top:14px}
+.addbox input,.addbox select{
+  min-width:0;background:#0e1713;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 10px
+}
+.note{margin-top:14px;padding:12px 14px;border-radius:12px;background:#86b7ff0d;border:1px solid #86b7ff22;color:#aabbb2;font-size:.8rem}
+footer{border-top:1px solid #ffffff0d;padding:24px 0 44px;color:#6f8178;font-size:.78rem;display:flex;justify-content:space-between;gap:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{to{transform:translate(-20px,-10px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+@media(max-width:980px){.hero,.layout{grid-template-columns:1fr}.hero-art{min-height:310px}.metrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){
+  .hero{padding-top:28px}.hero-copy{padding:24px}.hero-art{display:none}
+  h1{font-size:3.2rem}.calendar{grid-template-columns:1fr 1fr}.dow{display:none}.day{min-height:100px}
+  .task{grid-template-columns:24px minmax(0,1fr) 34px}.date-select{grid-column:2;grid-row:2}
+  .addbox{grid-template-columns:1fr 1fr}.addbox input{grid-column:1/-1}
+  .metrics{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="wrap nav">
+    <div class="brand"><span class="logo"></span> URLOP / PLAN</div>
+    <a href="#zadania">Zadania</a>
+    <a href="#kalendarz">Kalendarz</a>
+    <a href="/projekt_ogrod/">Projekt ogród</a>
+    <a href="/forma/">Projekt Forma</a>
+    <a href="/">← Strona główna</a>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">05.10 — 18.10.2026 · 14 dni</div>
+      <h1>Dwa tygodnie.<br><em>Zero chaosu.</em></h1>
+      <p class="lead">Jedno miejsce na sprawy domowe, zdrowie, zakupy, formę, sprzedaż i organizację. Przypisuj zadania do dni, odhaczaj i pilnuj postępu.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#zadania">Zacznij od checklisty ↓</a>
+        <a class="btn" href="#kalendarz">Rozplanuj dni →</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="orbit"></div><div class="orbit o2"></div>
+      <div class="calendar-visual" id="hero-grid"></div>
+      <div class="art-label">Plan urlopu · zrobione &gt; zaplanowane &gt; chaos</div>
+    </div>
+  </section>
+
+  <section class="metrics">
+    <div class="metric"><strong id="m-total">0</strong><span>zadań</span></div>
+    <div class="metric"><strong id="m-done">0</strong><span>zrobione</span></div>
+    <div class="metric"><strong id="m-planned">0</strong><span>zaplanowane na dzień</span></div>
+    <div class="metric"><strong id="m-left">0</strong><span>pozostało</span></div>
+  </section>
+
+  <section id="zadania" class="panel">
+    <div class="toolbar">
+      <div><h2>Rzeczy do zrobienia</h2><p class="sub">Startowa lista jest już wpisana. Możesz dodawać, usuwać i przypisywać terminy.</p></div>
+      <div class="filters" id="filters"></div>
+    </div>
+
+    <div class="progress-box">
+      <div class="progress-line"><div id="progress-fill" class="progress-fill"></div></div>
+      <div class="progress-copy"><span id="progress-text">0% zrobione</span><span id="progress-count">0 / 0</span></div>
+    </div>
+
+    <div class="addbox">
+      <input id="new-title" placeholder="Dodaj własne zadanie…">
+      <select id="new-cat"></select>
+      <select id="new-date"></select>
+      <button class="btn primary" id="add-task">Dodaj</button>
+    </div>
+
+    <div class="task-groups" id="task-groups"></div>
+  </section>
+
+  <section id="kalendarz" class="panel" style="margin-top:18px">
+    <h2>Kalendarz urlopu</h2>
+    <p class="sub">Przypisz zadanie do dnia z listy powyżej. Kalendarz zaktualizuje się automatycznie.</p>
+    <div class="calendar" id="calendar"></div>
+    <div class="note">Postęp i terminy zapisują się lokalnie w tej przeglądarce. Jeśli wejdziesz z innego urządzenia, zobaczysz domyślną listę bez swoich odhaczonych punktów.</div>
+  </section>
+</main>
+
+<footer class="wrap"><span>Urlop · październik 2026</span><span>Plan prosty: zaplanować → zrobić → odhaczyć.</span></footer>
+
+<script>
+const KEY='urlop-plan-2026-v1';
+const START='2026-10-05', END='2026-10-18';
+const cats={
+  ogrod:{label:'Ogród',icon:'🌿'},
+  tel:{label:'Telefon / oferta',icon:'📱'},
+  forma:{label:'Forma',icon:'🏋️'},
+  lekarze:{label:'Lekarze',icon:'🩺'},
+  mieszkanie:{label:'Mieszkanie',icon:'🏠'},
+  praca:{label:'Praca / organizacja',icon:'💻'},
+  sprzedaz:{label:'Sprzedaż',icon:'🏷️'}
+};
+const defaults=[
+  {id:'shed',cat:'ogrod',title:'Domek narzędziowy w ogródku',meta:'Dopięcie projektu, zakupy i wykonanie.',link:'/projekt_ogrod/'},
+  {id:'tmobile',cat:'tel',title:'Ogarnąć ofertę w T-Mobile pod telefon',meta:'Sprawdzić opcje po zakończeniu umowy / wcześniejszym mixie na kartę.'},
+  {id:'forma',cat:'forma',title:'Projekt Forma — ustawić kalorie i redukcję',meta:'Kalorie, kontrola masy ciała i redukcja tkanki tłuszczowej.',link:'/forma/'},
+  {id:'hospital',cat:'lekarze',title:'Szpital Opole — ogarnąć wyniki badań',meta:'Zebrać wyniki i zadzwonić, czy mogą przeanalizować wcześniejsze badania.'},
+  {id:'dentist',cat:'lekarze',title:'Umówić dentystę',meta:'Wybrać termin i zapisać wizytę.'},
+  {id:'endo',cat:'lekarze',title:'Umówić endokrynologa',meta:'Wybrać termin i zapisać wizytę.'},
+  {id:'uro',cat:'lekarze',title:'Umówić urologa',meta:'Temat dotyczący jąder — urolog, nie proktolog.'},
+  {id:'doors',cat:'mieszkanie',title:'Drzwi do mieszkania',meta:'Sprawdzić modele, gdzie kupić, jak zamówić i przygotować kosztorys.'},
+  {id:'kitchen',cat:'mieszkanie',title:'Kuchnia — Bagata Meble',meta:'Wrócić do projektu kuchni i sprawdzić aktualne promocje / warunki.'},
+  {id:'corner',cat:'mieszkanie',title:'Wybrać narożnik do salonu',meta:'Rozmiar, układ, materiał i budżet.'},
+  {id:'rtv',cat:'mieszkanie',title:'Zabudowa RTV + kominek elektryczny',meta:'Półka/szafka pod TV, kominek bez komina, koncepcja drewnianej zabudowy i ewentualny stolarz.'},
+  {id:'workpc',cat:'praca',title:'Uporządkować komputer służbowy',meta:'Foldery, pulpit, stare pliki i dokumenty — zlikwidować chaos.'},
+  {id:'iphone',cat:'sprzedaz',title:'Wystawić iPhone’a na sprzedaż',meta:'Zdjęcia, wycena, opis i ogłoszenie.'},
+  {id:'watch',cat:'sprzedaz',title:'Wystawić Apple Watcha na sprzedaż',meta:'Zdjęcia, wycena, opis i ogłoszenie.'}
+];
+let state={tasks:defaults.map(x=>({...x,done:false,date:''})),filter:'all'};
+try{
+  const saved=JSON.parse(localStorage.getItem(KEY)||'null');
+  if(saved&&Array.isArray(saved.tasks)){state=saved}
+}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+function dates(){
+  const out=[]; let d=new Date(START+'T12:00:00');
+  const end=new Date(END+'T12:00:00');
+  while(d<=end){out.push(d.toISOString().slice(0,10));d.setDate(d.getDate()+1)}
+  return out
+}
+const allDates=dates();
+function dateLabel(iso){
+  if(!iso)return 'Bez terminu';
+  return new Intl.DateTimeFormat('pl-PL',{weekday:'short',day:'2-digit',month:'2-digit'}).format(new Date(iso+'T12:00:00'));
+}
+function dateOptions(value=''){
+  return '<option value="">Bez terminu</option>'+allDates.map(d=>'<option value="'+d+'" '+(d===value?'selected':'')+'>'+dateLabel(d)+'</option>').join('');
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function renderFilters(){
+  const host=document.getElementById('filters');
+  host.innerHTML='<button class="filter '+(state.filter==='all'?'active':'')+'" data-filter="all">Wszystko</button>'+
+    Object.entries(cats).map(([k,v])=>'<button class="filter '+(state.filter===k?'active':'')+'" data-filter="'+k+'">'+v.icon+' '+v.label+'</button>').join('');
+  host.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{state.filter=b.dataset.filter;save();render()})
+}
+function renderTasks(){
+  const host=document.getElementById('task-groups');
+  const shown=state.tasks.filter(t=>state.filter==='all'||t.cat===state.filter);
+  const grouped={}; shown.forEach(t=>(grouped[t.cat]??=[]).push(t));
+  host.innerHTML=Object.keys(grouped).map(cat=>{
+    const v=cats[cat]||{label:cat,icon:'•'};
+    return '<div class="group"><div class="group-head"><b><span class="dot"></span>'+v.icon+' '+v.label+'</b><span class="meta">'+grouped[cat].filter(t=>t.done).length+' / '+grouped[cat].length+'</span></div>'+
+      grouped[cat].map(t=>'<div class="task '+(t.done?'done':'')+'">'+
+        '<input type="checkbox" data-check="'+t.id+'" '+(t.done?'checked':'')+'>'+
+        '<div><div class="title">'+esc(t.title)+'</div><div class="meta">'+esc(t.meta||'')+'</div>'+(t.link?'<a class="quick-link" href="'+t.link+'">Otwórz projekt ↗</a>':'')+'</div>'+
+        '<select class="date-select" data-date="'+t.id+'">'+dateOptions(t.date)+'</select>'+
+        '<button class="iconbtn" title="Usuń" data-del="'+t.id+'">×</button></div>').join('')+
+      '</div>'
+  }).join('')||'<div class="note">Brak zadań w tej kategorii.</div>';
+  host.querySelectorAll('[data-check]').forEach(x=>x.onchange=()=>{const t=state.tasks.find(t=>t.id===x.dataset.check);if(t){t.done=x.checked;save();render()}})
+  host.querySelectorAll('[data-date]').forEach(x=>x.onchange=()=>{const t=state.tasks.find(t=>t.id===x.dataset.date);if(t){t.date=x.value;save();render()}})
+  host.querySelectorAll('[data-del]').forEach(x=>x.onclick=()=>{state.tasks=state.tasks.filter(t=>t.id!==x.dataset.del);save();render()})
+}
+function renderCalendar(){
+  const host=document.getElementById('calendar');
+  const dows=['Pon','Wt','Śr','Czw','Pt','Sob','Ndz'];
+  host.innerHTML=dows.map(x=>'<div class="dow">'+x+'</div>').join('')+
+    allDates.map((d,i)=>{
+      const dt=new Date(d+'T12:00:00'), day=dt.getDay();
+      const items=state.tasks.filter(t=>t.date===d);
+      return '<div class="day '+([0,6].includes(day)?'weekend ':'')+'"><strong>'+new Intl.DateTimeFormat('pl-PL',{day:'2-digit',month:'2-digit'}).format(dt)+'</strong><small>'+new Intl.DateTimeFormat('pl-PL',{weekday:'long'}).format(dt)+'</small><div class="day-tasks">'+
+      (items.length?items.map(t=>'<div class="chip '+(t.done?'done':'')+'">'+esc(t.title)+'</div>').join(''):'<div class="meta">—</div>')+
+      '</div></div>'
+    }).join('')
+}
+function renderMetrics(){
+  const total=state.tasks.length, done=state.tasks.filter(t=>t.done).length, planned=state.tasks.filter(t=>t.date).length, left=total-done;
+  document.getElementById('m-total').textContent=total;
+  document.getElementById('m-done').textContent=done;
+  document.getElementById('m-planned').textContent=planned;
+  document.getElementById('m-left').textContent=left;
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-text').textContent=pct+'% zrobione';
+  document.getElementById('progress-count').textContent=done+' / '+total;
+}
+function render(){
+  renderFilters();renderTasks();renderCalendar();renderMetrics()
+}
+document.getElementById('new-cat').innerHTML=Object.entries(cats).map(([k,v])=>'<option value="'+k+'">'+v.icon+' '+v.label+'</option>').join('');
+document.getElementById('new-date').innerHTML=dateOptions('');
+document.getElementById('add-task').onclick=()=>{
+  const title=document.getElementById('new-title').value.trim();if(!title)return;
+  state.tasks.push({id:'u'+Date.now(),cat:document.getElementById('new-cat').value,title,meta:'Własne zadanie',date:document.getElementById('new-date').value,done:false});
+  document.getElementById('new-title').value='';save();render()
+};
+document.getElementById('new-title').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('add-task').click()});
+document.getElementById('hero-grid').innerHTML=Array.from({length:35},(_,i)=>'<span>'+(i%7===0?'•':'')+'</span>').join('');
+render();
+</script>
+</body>
+</html>
