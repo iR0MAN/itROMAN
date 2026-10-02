@@ -230,6 +230,8 @@ const defaults=[
   {id:'dentist',cat:'lekarze',title:'Umówić dentystę',meta:'Wybrać termin i zapisać wizytę.'},
   {id:'endo',cat:'lekarze',title:'Umówić endokrynologa',meta:'Wybrać termin i zapisać wizytę.'},
   {id:'uro',cat:'lekarze',title:'Umówić urologa',meta:'Temat dotyczący jąder — urolog, nie proktolog.'},
+  {id:'eyeexam',cat:'lekarze',title:'Zbadać wzrok',meta:'Umówić badanie wzroku i sprawdzić aktualną korekcję.'},
+  {id:'glasses',cat:'lekarze',title:'Kupić nowe okulary',meta:'Po badaniu dobrać oprawki i szkła.'},
   {id:'doors',cat:'mieszkanie',title:'Drzwi do mieszkania',meta:'Sprawdzić modele, gdzie kupić, jak zamówić i przygotować kosztorys.'},
   {id:'kitchen',cat:'mieszkanie',title:'Kuchnia — Bagata Meble',meta:'Wrócić do projektu kuchni i sprawdzić aktualne promocje / warunki.'},
   {id:'corner',cat:'mieszkanie',title:'Wybrać narożnik do salonu',meta:'Rozmiar, układ, materiał i budżet.'},
@@ -241,7 +243,11 @@ const defaults=[
 let state={tasks:defaults.map(x=>({...x,done:false,date:''})),filter:'all'};
 try{
   const saved=JSON.parse(localStorage.getItem(KEY)||'null');
-  if(saved&&Array.isArray(saved.tasks)){state=saved}
+  if(saved&&Array.isArray(saved.tasks)){
+    state=saved;
+    const known=new Set(state.tasks.map(t=>t.id));
+    defaults.filter(t=>!known.has(t.id)).forEach(t=>state.tasks.push({...t,done:false,date:''}));
+  }
 }catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 function dates(){
