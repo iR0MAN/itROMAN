@@ -1,0 +1,6 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {World,T} from './world.mjs';
+import {Terrain,fresh,TYPES} from './core.mjs';
+test('mapa powstaje z prawdziwych modeli Three.js, NPC i wszystkich potworów',()=>{const w=Object.create(World.prototype);Object.assign(w,{scene:new T.Scene(),terrain:new Terrain(),mobs:[],npcs:[],pickables:[],effects:[]});w.build();assert.equal(w.npcs.length,4);assert.equal(w.mobs.length,TYPES.reduce((n,t)=>n+t.n,0));for(const m of w.mobs){assert.ok(m.mesh instanceof T.Group);assert.equal(w.terrain.blocked(m.x,m.z,1.1),false,m.id);assert.equal(m.x<38&&m.z<37,false,'potwór poza bezpieczną wioską: '+m.id);}for(const n of w.npcs){assert.equal(w.terrain.blocked(n.x,n.z),false,n.id);assert.ok(w.terrain.path(17,12,n.x,n.z).length,n.id+' dostępny');}assert.ok(w.scene.children.length>150);w.player=(awaitlessHumanoid());w.setEquipment(fresh());let meshes=0;w.scene.traverse(n=>{if(n.isMesh){meshes++;assert.ok(n.geometry.attributes.position);}});assert.ok(meshes>500);});
+function awaitlessHumanoid(){const g=new T.Group();g.userData={body:new T.Mesh(new T.BoxGeometry(),new T.MeshStandardMaterial()),sword:new T.Group()};g.userData.sword.add(new T.Mesh(new T.BoxGeometry(),new T.MeshStandardMaterial()));return g;}
