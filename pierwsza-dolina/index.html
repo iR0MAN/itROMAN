@@ -19,6 +19,6 @@
  window.addEventListener('error',e=>{if(!booted)fail('Błąd uruchamiania gry: '+(e.message||'Nie udało się pobrać pliku JavaScript.'));});
  window.addEventListener('unhandledrejection',e=>{if(!booted)fail('Błąd modułu gry: '+(e.reason?.message||String(e.reason)));});
  setTimeout(()=>{if(!booted)fail('Przekroczono czas uruchamiania silnika gry (15 sekund).');},15000);
- const script=document.createElement('script');script.type='module';script.src='./game.mjs?v=20261013-4';script.onerror=()=>fail('Nie udało się pobrać modułu game.mjs.');document.body.appendChild(script);
+ const script=document.createElement('script');script.type='module';script.src='./game.mjs?v=20261013-shamanfx1';script.onerror=()=>fail('Nie udało się pobrać modułu game.mjs.');document.body.appendChild(script);
 })();
 </script></body></html>
