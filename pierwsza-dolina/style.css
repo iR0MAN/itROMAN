@@ -15,3 +15,30 @@
 .detailHead h3{margin:0}
 #modalContent .row .gearArt{vertical-align:middle;margin-right:6px}
 @media(max-width:800px){.equipSlot .itemIcon{width:35px;height:39px}.gearArt{width:32px;height:36px}.gearArt.compact{width:26px;height:30px}.detailHead .gearArt{width:52px;height:52px}}
+
+/* Metin-inspired equipment UI */
+.metinLayout{display:grid;grid-template-columns:minmax(205px,235px) minmax(0,1fr);gap:16px}
+.metinGear,.metinBag{border:1px solid #90734b;background:linear-gradient(155deg,#262b2d,#111a1a 75%);padding:13px;box-shadow:inset 0 0 22px #0005}
+.metinGear h3,.metinBag h3{margin:0 0 12px;color:#e4c590}
+.metinSilhouette{height:150px;margin-bottom:12px;border:1px solid #6e6046;background:radial-gradient(ellipse at center,#49525a,#1a2023 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#b7c8d0;font-size:65px;text-shadow:0 0 25px #68aaca55}
+.metinSilhouette small{font:10px Arial;color:#d9c296;letter-spacing:3px}
+.metinEquipment{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.metinEquipCell{display:flex;flex-direction:column;gap:4px}
+.metinEquipCell small{font:10px Arial;color:#b9a98c;white-space:nowrap}
+.metinSlot{position:relative;min-width:0;min-height:52px;border:1px solid #7e6445;background:linear-gradient(145deg,#303437,#121a1d);box-shadow:inset 0 2px 9px #0008;display:flex;align-items:center;justify-content:center;padding:3px;cursor:grab;transition:border-color .15s,background .15s,filter .15s}
+button.metinSlot{width:100%;height:100%;aspect-ratio:1;border-radius:2px}
+.metinSlot:hover{border-color:#efc789;filter:brightness(1.15)}
+.metinSlot.selected{border-color:#f7d891;background:#39433e;box-shadow:inset 0 0 12px #ca9d4a44,0 0 5px #ca9d4a99}
+.metinSlot[draggable=true]:active{cursor:grabbing}
+.metinSlot .gearArt{width:80%;max-width:52px;height:80%;max-height:54px}
+.metinSlot em{position:absolute;bottom:1px;right:3px;color:#edda9e;font:10px Arial;font-style:normal;text-shadow:0 1px 3px #000}
+.metinBagTitle{display:flex;align-items:center;justify-content:space-between}
+.metinBagTitle small{font:11px Arial;color:#d6b979}
+.metinGrid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
+.metinDrops{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.metinDrop{min-height:68px;border:1px dashed #98734c;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;padding:8px;text-align:center;background:#261f19;color:#e3d1b6;transition:background .15s}
+.metinDrop span{font-size:19px}.metinDrop b{font:12px Arial}.metinDrop small{font:9px Arial;color:#b4a894}
+.metinDrop.trash{border-color:#b1786b;background:#2b1d1b}.metinDrop:hover{background:#454234}
+.smithAnvil{height:116px;margin:10px 0 15px;background:radial-gradient(circle,#4c3b2a,#1c1a19);border:2px dashed #c29b58;color:#e8ba73;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:42px}
+.smithAnvil small{font:12px Arial;margin-top:6px}.smithItem{cursor:grab}.smithItem span{display:flex;gap:5px;align-items:center}
+@media(max-width:800px){.metinLayout{grid-template-columns:1fr}.metinSilhouette{display:none}.metinEquipment{grid-template-columns:repeat(4,minmax(0,1fr))}.metinGear,.metinBag{padding:9px}.metinEquipCell small{font-size:9px}.metinSlot{min-height:40px}.metinGrid{grid-template-columns:repeat(8,minmax(0,1fr));gap:2px}.metinDrops{gap:5px}.metinDrop{min-height:60px;padding:5px}.metinDrop b{font-size:10px}.metinDrop small{font-size:8px}}
