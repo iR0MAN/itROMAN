@@ -74,6 +74,14 @@ export class World{
   group.add(points);
   this.effects.push({group,parts,points,vel,life:0,duration:kind==='buff'?1.45:kind==='whirl'?1.05:.75,kind});
  }
+ setBuffVisual(active,time=0){
+ const d=this.player.userData,sword=d.sword,blade=sword.children[0];
+ if(!d.aura){const group=new T.Group();const glowing=new T.Mesh(new T.BoxGeometry(.27,.25,1.85),new T.MeshBasicMaterial({color:0x54edff,transparent:true,opacity:.48,blending:T.AdditiveBlending,depthWrite:false}));glowing.position.set(0,0,.85);group.add(glowing);
+ const core=new T.Mesh(new T.BoxGeometry(.17,.15,1.8),new T.MeshBasicMaterial({color:0xf5ffff,transparent:true,opacity:.65,blending:T.AdditiveBlending,depthWrite:false}));core.position.set(0,0,.85);group.add(core);
+ const halo=new T.Mesh(new T.SphereGeometry(.28,10,8),new T.MeshBasicMaterial({color:0x6fffc7,transparent:true,opacity:.35,blending:T.AdditiveBlending,depthWrite:false}));halo.position.set(0,0,1.55);group.add(halo);sword.add(group);d.aura={group,glowing,core,halo};}
+ const aura=d.aura;aura.group.visible=!!active;
+ if(active){const p=Math.sin(time*11);aura.glowing.material.opacity=.42+p*.16;aura.core.material.opacity=.65+p*.12;aura.halo.material.opacity=.4+p*.18;aura.halo.scale.setScalar(1.3+Math.sin(time*8)*.3);}
+ }
  render(s,dt,time){this.player.position.set(s.x,0,s.z);const target=new T.Vector3(s.x,this.zoom*.95,s.z+this.zoom*.8);this.camera.position.lerp(target,1-Math.exp(-dt*8));this.camera.lookAt(s.x,0,s.z-2);this.sun.position.set(s.x-25,55,s.z+20);this.sun.target.position.set(s.x,0,s.z);for(let i=this.effects.length-1;i>=0;i--){const e=this.effects[i];if(e.group){
  e.life+=dt;const p=Math.min(1,e.life/e.duration),fade=Math.pow(1-p,1.3);
  e.group.scale.setScalar(.65+p*(e.kind==='whirl'?1.1:.55));
@@ -83,6 +91,6 @@ export class World{
  for(let j=0;j<e.vel.length;j++){const v=e.vel[j],a=v.a+e.life*(e.kind==='whirl'?7:2);pos.setXYZ(j,Math.cos(a)*v.r, v.h+(e.kind==='buff'?1:-.25)*e.life*v.s,Math.sin(a)*v.r);}
  pos.needsUpdate=true;e.points.material.opacity=fade;
  if(p>=1){this.scene.remove(e.group);e.group.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});this.effects.splice(i,1);}continue;}
- e.life+=dt;e.mesh.scale.setScalar(1+e.life*e.size*8);e.mesh.material.opacity=Math.max(0,.8-e.life*1.3);if(e.life>.6){this.scene.remove(e.mesh);e.mesh.geometry.dispose();e.mesh.material.dispose();this.effects.splice(i,1);}}this.renderer.render(this.scene,this.camera);}
+ e.life+=dt;e.mesh.scale.setScalar(1+e.life*e.size*8);e.mesh.material.opacity=Math.max(0,.8-e.life*1.3);if(e.life>.6){this.scene.remove(e.mesh);e.mesh.geometry.dispose();e.mesh.material.dispose();this.effects.splice(i,1);}}this.setBuffVisual(time<this.buffUntil,time);this.renderer.render(this.scene,this.camera);}
  setEquipment(s){const d=this.player.userData,t=s.equipped.armor.tier;d.body.material=mat([0x647567,0x80634a,0x577e8e,0x766393,0x886646][t]);const w=s.equipped.weapon;d.sword.children[0].scale.z=1.25+w.tier*.2;d.sword.children[0].material=mat(w.plus>=7?0xe6c68a:0xd6d9ca,{emissive:w.plus>=7?0xe4ab31:0x000000,emissiveIntensity:w.plus>=7?(w.plus-6)*.65:0});}
 }
