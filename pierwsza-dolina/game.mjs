@@ -110,11 +110,11 @@ function skill(n){
  const aura=n===0,berserk=n===1;
  if(state.mp<d[2]){toast('Brakuje energii. Użyj mikstury E.','bad');return;}
  if(!aura&&!berserk){target??=nearest();if(!target?.alive){toast('Wybierz przeciwnika.');return;}if(Math.hypot(target.x-state.x,target.z-state.z)>(n===2?12:n===3?4.5:n===4?5:5.5)){toast('Podejdź bliżej przeciwnika.');return;}}
- if(n===2){const dx=state.x-target.x,dz=state.z-target.z,dist=Math.hypot(dx,dz)||1,tx=target.x+dx/dist*2,tz=target.z+dz/dist*2;if(!world.terrain.path(state.x,state.z,tx,tz).length){toast('Przeszkoda blokuje szarżę.');return;}for(let i=1;i<=24;i++){const cx=state.x+(tx-state.x)*i/24,cz=state.z+(tz-state.z)*i/24;if(world.terrain.blocked(cx,cz)){toast('Przeszkoda blokuje szarżę.');return;}}state.x=tx;state.z=tz;path=[];}
+ const chargeOrigin=n===2?{x:state.x,z:state.z}:null;if(n===2){const dx=state.x-target.x,dz=state.z-target.z,dist=Math.hypot(dx,dz)||1,tx=target.x+dx/dist*2,tz=target.z+dz/dist*2;if(!world.terrain.path(state.x,state.z,tx,tz).length){toast('Przeszkoda blokuje szarżę.');return;}for(let i=1;i<=24;i++){const cx=state.x+(tx-state.x)*i/24,cz=state.z+(tz-state.z)*i/24;if(world.terrain.blocked(cx,cz)){toast('Przeszkoda blokuje szarżę.');return;}}state.x=tx;state.z=tz;path=[];}
  state.mp-=d[2];cooldowns[n]=time+d[3];const strength=1+state.stats.str*.035;
  if(aura){buffUntil=time+12+state.stats.int*.15;world.buffUntil=buffUntil;world.skillEffect('buff',state.x,state.z);toast('Aura Miecza: atak +35%.','good');}
  if(berserk){berserkUntil=time+16;world.skillEffect('buff',state.x,state.z);toast('Berserk: szybszy atak i ruch, ale większe obrażenia od wrogów!','good');}
- if(n===2){world.skillEffect('charge',target.x,target.z,state.x,state.z);hit(target,1.7*strength);if(target.alive&&Math.random()<.55)applyStatus(target,'stun',2.5,1); }
+ if(n===2){world.skillEffect('charge',target.x,target.z,chargeOrigin.x,chargeOrigin.z);hit(target,1.7*strength);if(target.alive&&Math.random()<.55)applyStatus(target,'stun',2.5,1); }
  if(n===3){world.skillEffect('slash',target.x,target.z,state.x,state.z);for(let i=0;i<3&&target.alive;i++)hit(target,.95*strength);}
  if(n===4){world.skillEffect('whirl',state.x,state.z);for(const m of world.mobs)if(m.alive&&Math.hypot(m.x-state.x,m.z-state.z)<5)hit(m,1.55*strength);}
  if(n===5){world.skillEffect('whirl',state.x,state.z);world.skillEffect('slash',target.x,target.z,state.x,state.z);for(const m of world.mobs)if(m.alive&&Math.hypot(m.x-target.x,m.z-target.z)<3.5)hit(m,2.6*strength);}
