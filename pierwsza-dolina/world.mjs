@@ -92,5 +92,5 @@ export class World{
  pos.needsUpdate=true;e.points.material.opacity=fade;
  if(p>=1){this.scene.remove(e.group);e.group.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});this.effects.splice(i,1);}continue;}
  e.life+=dt;e.mesh.scale.setScalar(1+e.life*e.size*8);e.mesh.material.opacity=Math.max(0,.8-e.life*1.3);if(e.life>.6){this.scene.remove(e.mesh);e.mesh.geometry.dispose();e.mesh.material.dispose();this.effects.splice(i,1);}}this.setBuffVisual(time<this.buffUntil,time);this.renderer.render(this.scene,this.camera);}
- setEquipment(s){const d=this.player.userData,t=s.equipped.armor.tier;d.body.material=mat([0x647567,0x80634a,0x577e8e,0x766393,0x886646][t]);const w=s.equipped.weapon;d.sword.children[0].scale.z=1.25+w.tier*.2;d.sword.children[0].material=mat(w.plus>=7?0xe6c68a:0xd6d9ca,{emissive:w.plus>=7?0xe4ab31:0x000000,emissiveIntensity:w.plus>=7?(w.plus-6)*.65:0});}
+ setEquipment(s){const d=this.player.userData,t=s.equipped.armor.tier;d.body.material=mat(s.classId==='shaman'?0x755c99:s.classId==='ninja'?0x333f53:[0x647567,0x80634a,0x577e8e,0x766393,0x886646][t]);const w=s.equipped.weapon;d.sword.children[0].scale.z=(s.classId==='ninja'?.65:s.classId==='shaman'?.9:1.25)+w.tier*.2;d.sword.children[0].material=mat(w.plus>=7?0xe6c68a:0xd6d9ca,{emissive:w.plus>=7?0xe4ab31:0x000000,emissiveIntensity:w.plus>=7?(w.plus-6)*.65:0});}
 }
