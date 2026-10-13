@@ -154,10 +154,10 @@ export class World{
   d.arms[1].add(fan);
   const dagger=new T.Group();dagger.position.copy(d.sword.position);piece(dagger,boxG,0x4e3b31,0,0,.28,.12,.12,.58);piece(dagger,boxG,0xe1f4f1,0,0,.79,.2,.075,.65,{metalness:.7,roughness:.2});piece(dagger,boxG,0xcaa55d,0,0,.49,.43,.11,.13);d.arms[1].add(dagger);
   const offhand=new T.Group();offhand.position.set(0,-.9,.12);piece(offhand,boxG,0x5a3b2a,0,0,.2,.11,.1,.5);piece(offhand,boxG,0xc6edf1,0,0,.65,.18,.08,.63,{metalness:.65});piece(offhand,boxG,0xe3b67e,0,0,.38,.36,.1,.12);d.arms[0].add(offhand);
-  d.classWeapons={fan,dagger,offhand};
+  const greatsword=new T.Group();greatsword.position.copy(d.sword.position);piece(greatsword,boxG,0x77543b,0,0,.22,.18,.16,.6);piece(greatsword,boxG,0xc7d0ce,0,0,1.35,.29,.13,1.75,{metalness:.72,roughness:.25});piece(greatsword,boxG,0xc89e59,0,0,.56,.76,.14,.16);d.arms[1].add(greatsword);d.classWeapons={fan,dagger,offhand,greatsword};
  }
- const shaman=classId==='shaman',ninja=classId==='ninja';d.sword.visible=!shaman&&!ninja;d.classWeapons.fan.visible=shaman;d.classWeapons.dagger.visible=ninja;d.classWeapons.offhand.visible=ninja;
+ const shaman=classId==='shaman',ninja=classId==='ninja',mental=classId==='mental';d.sword.visible=!shaman&&!ninja&&!mental;d.classWeapons.greatsword.visible=mental;d.classWeapons.fan.visible=shaman;d.classWeapons.dagger.visible=ninja;d.classWeapons.offhand.visible=ninja;
  if(d.aura)d.aura.group.visible=!shaman&&!ninja&&d.aura.group.visible;
  }
- setEquipment(s){this.currentClassId=s.classId||'warrior';const d=this.player.userData,t=s.equipped.armor.tier;d.body.material=mat(s.classId==='shaman'?0x755c99:s.classId==='ninja'?0x333f53:[0x647567,0x80634a,0x577e8e,0x766393,0x886646][t]);this.configureClassWeapons(s.classId);const w=s.equipped.weapon;d.sword.children[0].scale.z=(s.classId==='ninja'?.65:s.classId==='shaman'?.9:1.25)+w.tier*.2;d.sword.children[0].material=mat(w.plus>=7?0xe6c68a:0xd6d9ca,{emissive:w.plus>=7?0xe4ab31:0x000000,emissiveIntensity:w.plus>=7?(w.plus-6)*.65:0});}
+ setEquipment(s){this.currentClassId=s.classId||'warrior';const d=this.player.userData,t=s.equipped.armor.tier;d.body.material=mat(s.classId==='shaman'?0x755c99:s.classId==='ninja'?0x333f53:s.classId==='mental'?0x727985:[0x647567,0x80634a,0x577e8e,0x766393,0x886646][t]);this.configureClassWeapons(s.classId);const w=s.equipped.weapon;d.sword.children[0].scale.z=(s.classId==='ninja'?.65:s.classId==='shaman'?.9:1.25)+w.tier*.2;d.sword.children[0].material=mat(w.plus>=7?0xe6c68a:0xd6d9ca,{emissive:w.plus>=7?0xe4ab31:0x000000,emissiveIntensity:w.plus>=7?(w.plus-6)*.65:0});}
 }
