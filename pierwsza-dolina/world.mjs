@@ -79,7 +79,7 @@ export class World{
  if(!d.aura){const group=new T.Group();const glowing=new T.Mesh(new T.BoxGeometry(.27,.25,1.85),new T.MeshBasicMaterial({color:0x54edff,transparent:true,opacity:.48,blending:T.AdditiveBlending,depthWrite:false}));glowing.position.set(0,0,.85);group.add(glowing);
  const core=new T.Mesh(new T.BoxGeometry(.17,.15,1.8),new T.MeshBasicMaterial({color:0xf5ffff,transparent:true,opacity:.65,blending:T.AdditiveBlending,depthWrite:false}));core.position.set(0,0,.85);group.add(core);
  const halo=new T.Mesh(new T.SphereGeometry(.28,10,8),new T.MeshBasicMaterial({color:0x6fffc7,transparent:true,opacity:.35,blending:T.AdditiveBlending,depthWrite:false}));halo.position.set(0,0,1.55);group.add(halo);sword.add(group);d.aura={group,glowing,core,halo};}
- const aura=d.aura;aura.group.visible=!!active;
+ const aura=d.aura;aura.group.visible=!!active&&d.sword.visible;
  if(active){const p=Math.sin(time*11);aura.glowing.material.opacity=.42+p*.16;aura.core.material.opacity=.65+p*.12;aura.halo.material.opacity=.4+p*.18;aura.halo.scale.setScalar(1.3+Math.sin(time*8)*.3);}
  }
  render(s,dt,time){this.player.position.set(s.x,0,s.z);const target=new T.Vector3(s.x,this.zoom*.95,s.z+this.zoom*.8);this.camera.position.lerp(target,1-Math.exp(-dt*8));this.camera.lookAt(s.x,0,s.z-2);this.sun.position.set(s.x-25,55,s.z+20);this.sun.target.position.set(s.x,0,s.z);for(let i=this.effects.length-1;i>=0;i--){const e=this.effects[i];if(e.group){
@@ -92,5 +92,20 @@ export class World{
  pos.needsUpdate=true;e.points.material.opacity=fade;
  if(p>=1){this.scene.remove(e.group);e.group.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});this.effects.splice(i,1);}continue;}
  e.life+=dt;e.mesh.scale.setScalar(1+e.life*e.size*8);e.mesh.material.opacity=Math.max(0,.8-e.life*1.3);if(e.life>.6){this.scene.remove(e.mesh);e.mesh.geometry.dispose();e.mesh.material.dispose();this.effects.splice(i,1);}}this.setBuffVisual(time<this.buffUntil,time);this.renderer.render(this.scene,this.camera);}
- setEquipment(s){const d=this.player.userData,t=s.equipped.armor.tier;d.body.material=mat(s.classId==='shaman'?0x755c99:s.classId==='ninja'?0x333f53:[0x647567,0x80634a,0x577e8e,0x766393,0x886646][t]);const w=s.equipped.weapon;d.sword.children[0].scale.z=(s.classId==='ninja'?.65:s.classId==='shaman'?.9:1.25)+w.tier*.2;d.sword.children[0].material=mat(w.plus>=7?0xe6c68a:0xd6d9ca,{emissive:w.plus>=7?0xe4ab31:0x000000,emissiveIntensity:w.plus>=7?(w.plus-6)*.65:0});}
+ configureClassWeapons(classId){
+ const d=this.player.userData;if(!d.classWeapons){
+  const fan=new T.Group();fan.position.copy(d.sword.position);
+  const handle=piece(fan,boxG,0x9c7945,0,0,.26,.11,.1,.75);
+  const fanBlade=new T.Mesh(new T.SphereGeometry(.66,18,10,0,Math.PI,0,Math.PI),new T.MeshStandardMaterial({color:0x9673bf,metalness:.45,roughness:.45,side:T.DoubleSide,emissive:0x3e226a,emissiveIntensity:.5}));
+  fanBlade.rotation.set(Math.PI/2,0,0);fanBlade.scale.set(.9,.1,.65);fanBlade.position.z=.85;fan.add(fanBlade);
+  for(let i=0;i<7;i++){const a=-Math.PI/2+i*Math.PI/6;const rib=piece(fan,boxG,0xe8c77a,Math.sin(a)*.34,0,.65+Math.cos(a)*.3,.035,.07,.57);rib.rotation.y=a*.5;}
+  d.arms[1].add(fan);
+  const dagger=new T.Group();dagger.position.copy(d.sword.position);piece(dagger,boxG,0x4e3b31,0,0,.28,.12,.12,.58);piece(dagger,boxG,0xe1f4f1,0,0,.79,.2,.075,.65,{metalness:.7,roughness:.2});piece(dagger,boxG,0xcaa55d,0,0,.49,.43,.11,.13);d.arms[1].add(dagger);
+  const offhand=new T.Group();offhand.position.set(0,-.9,.12);piece(offhand,boxG,0x5a3b2a,0,0,.2,.11,.1,.5);piece(offhand,boxG,0xc6edf1,0,0,.65,.18,.08,.63,{metalness:.65});piece(offhand,boxG,0xe3b67e,0,0,.38,.36,.1,.12);d.arms[0].add(offhand);
+  d.classWeapons={fan,dagger,offhand};
+ }
+ const shaman=classId==='shaman',ninja=classId==='ninja';d.sword.visible=!shaman&&!ninja;d.classWeapons.fan.visible=shaman;d.classWeapons.dagger.visible=ninja;d.classWeapons.offhand.visible=ninja;
+ if(d.aura)d.aura.group.visible=!shaman&&!ninja&&d.aura.group.visible;
+ }
+ setEquipment(s){const d=this.player.userData,t=s.equipped.armor.tier;d.body.material=mat(s.classId==='shaman'?0x755c99:s.classId==='ninja'?0x333f53:[0x647567,0x80634a,0x577e8e,0x766393,0x886646][t]);this.configureClassWeapons(s.classId);const w=s.equipped.weapon;d.sword.children[0].scale.z=(s.classId==='ninja'?.65:s.classId==='shaman'?.9:1.25)+w.tier*.2;d.sword.children[0].material=mat(w.plus>=7?0xe6c68a:0xd6d9ca,{emissive:w.plus>=7?0xe4ab31:0x000000,emissiveIntensity:w.plus>=7?(w.plus-6)*.65:0});}
 }
