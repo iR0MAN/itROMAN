@@ -10,4 +10,15 @@
 <div id="joystick"><div></div></div><button id="attackButton">⚔</button><button id="lootButton">Zbierz [Z]</button>
 <section id="modal" hidden><div class="modalWindow"><header><div><small>PIERWSZA DOLINA</small><h2 id="modalTitle"></h2></div><button id="closeModal" aria-label="Zamknij">×</button></header><div id="modalContent"></div></div></section>
 <section id="start"><div class="startArt"><div class="sigil">龍</div><small>PRZEGLĄDARKOWE ACTION RPG</small><h1>PIERWSZA<br><span>DOLINA</span></h1><div class="divider"></div><p>Twoja historia zaczyna się od zwykłego ostrza.<br>To, czym się stanie, zależy od Ciebie.</p><div class="features"><span>OTWARTY ŚWIAT 3D</span><span>EKWIPUNEK +0 — +9</span><span>12 MISJI</span></div><label>Imię postaci<input id="nameInput" maxlength="20" placeholder="Wojownik" autocomplete="off"></label><label>Klasa postaci<select id="classSelect"><option value="warrior">Wojownik</option><option value="shaman">Szaman Smok</option><option value="ninja">Ninja Dagger</option></select></label><button id="startButton" disabled>Przygotowywanie doliny…</button><button id="continueButton" hidden>Kontynuuj przygodę</button><small class="controlsHint">WASD / kliknięcie — ruch · Spacja — atak<br>Telefon: joystick i przyciski · Postęp zapisywany na tym urządzeniu</small><p id="loadError" hidden></p></div></section>
-</main><script type="module" src="./game.mjs"></script></body></html>
+</main><script>
+(function(){
+ const button=document.getElementById('startButton'),error=document.getElementById('loadError');
+ let booted=false;
+ function fail(message){if(booted)return;button.disabled=true;button.textContent='Nie udało się uruchomić';error.hidden=false;error.textContent=message+' Spróbuj Ctrl+F5. Jeśli problem wróci, prześlij treść tego komunikatu.';}
+ window.addEventListener('game-ready',()=>{booted=true;});
+ window.addEventListener('error',e=>{if(!booted)fail('Błąd uruchamiania gry: '+(e.message||'Nie udało się pobrać pliku JavaScript.'));});
+ window.addEventListener('unhandledrejection',e=>{if(!booted)fail('Błąd modułu gry: '+(e.reason?.message||String(e.reason)));});
+ setTimeout(()=>{if(!booted)fail('Przekroczono czas uruchamiania silnika gry (15 sekund).');},15000);
+ const script=document.createElement('script');script.type='module';script.src='./game.mjs?v=20261013-2';script.onerror=()=>fail('Nie udało się pobrać modułu game.mjs.');document.body.appendChild(script);
+})();
+</script></body></html>
