@@ -47,17 +47,26 @@ export class World{
       m.rotation.set(.2+i*.4,.15,i*.35);m.position.y=1.8+i*.35;group.add(m);parts.push(m);}
     ring(1.1,.22,.16);
   }else if(kind==='whirl'){
-    for(let i=0;i<4;i++){const m=ring(2+i*.63,.15,.25+i*.22,.8);parts.push(m);}
-    for(let i=0;i<3;i++){const torus=new T.Mesh(new T.TorusGeometry(2.1+i*.45,.09,6,48,Math.PI*1.6),
-      new T.MeshBasicMaterial({color:i===0?0xf5d4ff:color,transparent:true,opacity:.85,side:T.DoubleSide,blending:T.AdditiveBlending,depthWrite:false}));
-      torus.rotation.x=Math.PI/2.7;torus.position.y=1+i*.55;group.add(torus);parts.push(torus);}
+    const palette=[0xffbd62,0x80d8ff,0xffdf96,0x9ae5fa];
+    for(let i=0;i<4;i++){
+      const arc=new T.Mesh(new T.TorusGeometry(1.9+i*.32,.12+i*.01,10,70,Math.PI*1.27),
+        new T.MeshBasicMaterial({color:palette[i],transparent:true,opacity:.88,side:T.DoubleSide,depthWrite:false,blending:T.AdditiveBlending}));
+      arc.rotation.set(Math.PI/2,0,i*Math.PI*.47);arc.position.y=.4+i*.13;arc.userData.arc=true;group.add(arc);parts.push(arc);
+    }
+    for(let i=0;i<2;i++){const m=new T.Mesh(new T.RingGeometry(2.1+i*.62,2.33+i*.62,64),
+      new T.MeshBasicMaterial({color:i?0xffb86d:0x73cfff,transparent:true,opacity:.38,side:T.DoubleSide,depthWrite:false,blending:T.AdditiveBlending}));
+      m.rotation.x=-Math.PI/2;m.position.y=.08+i*.04;group.add(m);parts.push(m);}
   }else if(kind==='charge'){
-    ring(1.3,.32,.18);
+    for(let i=0;i<3;i++){const m=new T.Mesh(new T.RingGeometry(1.2+i*.45,1.53+i*.45,64),
+      new T.MeshBasicMaterial({color:[0x95dfff,0x80ffa4,0xffa05f][i],transparent:true,opacity:.7-i*.12,side:T.DoubleSide,depthWrite:false,blending:T.AdditiveBlending}));
+      m.rotation.x=-Math.PI/2;m.position.y=.07+i*.035;group.add(m);parts.push(m);}
     const dx=x-fromX,dz=z-fromZ,dist=Math.hypot(dx,dz);
-    const beam=new T.Mesh(new T.CylinderGeometry(.13,.45,Math.max(.5,dist),10,1,true),
-      new T.MeshBasicMaterial({color,transparent:true,opacity:.6,depthWrite:false,blending:T.AdditiveBlending,side:T.DoubleSide}));
-    beam.position.set(-dx/2,1.1,-dz/2);beam.rotation.z=0;
-    beam.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),new T.Vector3(dx,0,dz).normalize());group.add(beam);parts.push(beam);
+    if(dist>.1){const trail=new T.Mesh(new T.CylinderGeometry(.07,.28,dist,10,1,true),
+      new T.MeshBasicMaterial({color:0x7fdfff,transparent:true,opacity:.48,side:T.DoubleSide,depthWrite:false,blending:T.AdditiveBlending}));
+      trail.position.set(-dx/2,1.0,-dz/2);trail.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),new T.Vector3(dx/dist,0,dz/dist));group.add(trail);parts.push(trail);}
+    for(let i=0;i<9;i++){const angle=i*Math.PI*2/9;
+      const flare=new T.Mesh(new T.ConeGeometry(.1,.8+i%3*.22,6),new T.MeshBasicMaterial({color:i%2?0x8be9ff:0x8bffb3,transparent:true,opacity:.7,depthWrite:false,blending:T.AdditiveBlending}));
+      flare.position.set(Math.cos(angle)*1.55,.55,Math.sin(angle)*1.55);flare.userData.flare=true;group.add(flare);parts.push(flare);}
   }else{
     for(let i=0;i<3;i++){const m=ring(1+i*.43,.13,.2+i*.75,.85);parts.push(m);}
     const glow=new T.Mesh(new T.SphereGeometry(1.25,16,12),
@@ -126,9 +135,10 @@ export class World{
  }
  render(s,dt,time){this.player.position.set(s.x,0,s.z);const target=new T.Vector3(s.x,this.zoom*.95,s.z+this.zoom*.8);this.camera.position.lerp(target,1-Math.exp(-dt*8));this.camera.lookAt(s.x,0,s.z-2);this.sun.position.set(s.x-25,55,s.z+20);this.sun.target.position.set(s.x,0,s.z);for(let i=this.effects.length-1;i>=0;i--){const e=this.effects[i];if(e.group){
  e.life+=dt;const p=Math.min(1,e.life/e.duration),fade=Math.pow(1-p,1.3);
- e.group.scale.setScalar(.65+p*(e.kind==='whirl'?1.1:.55));
- e.group.rotation.y+=dt*(e.kind==='whirl'?7:e.kind==='buff'?2.5:3);
- for(const m of e.parts){m.material.opacity=Math.min(m.material.opacity,fade*.85);if(e.kind==='buff'&&m.geometry.type==='RingGeometry')m.position.y+=dt*2;}
+ e.group.scale.setScalar(e.kind==='whirl'?.77+p*.64:.7+p*.55);
+ if(e.kind==='whirl'){e.group.rotation.y+=dt*11;for(let j=0;j<e.parts.length;j++){const m=e.parts[j];m.material.opacity=fade*(m.userData.arc?.86:.34);if(m.userData.arc){m.rotation.z+=dt*(3+j*1.4);m.position.y+=Math.sin(e.life*12+j)*dt*.12;}else m.scale.setScalar(1+p*.18);}}
+ else if(e.kind==='charge'){for(let j=0;j<e.parts.length;j++){const m=e.parts[j];m.material.opacity=fade*(m.userData.flare?.72:.52);if(m.geometry.type==='RingGeometry')m.scale.setScalar(1+p*.8);if(m.userData.flare)m.position.y+=dt*1.3;}}
+ else{e.group.rotation.y+=dt*(e.kind==='buff'?2.5:3);for(const m of e.parts){m.material.opacity=Math.min(m.material.opacity,fade*.85);if(e.kind==='buff'&&m.geometry.type==='RingGeometry')m.position.y+=dt*2;}}
  const pos=e.points.geometry.attributes.position;
  for(let j=0;j<e.vel.length;j++){const v=e.vel[j],a=v.a+e.life*(e.kind==='whirl'?7:2);pos.setXYZ(j,Math.cos(a)*v.r, v.h+(e.kind==='buff'?1:-.25)*e.life*v.s,Math.sin(a)*v.r);}
  pos.needsUpdate=true;e.points.material.opacity=fade;
