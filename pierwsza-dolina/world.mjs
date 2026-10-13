@@ -31,6 +31,58 @@ export class World{
  animate(mesh,moving,time,attack=0){const d=mesh.userData;if(d.arms){d.legs.forEach((l,i)=>l.rotation.x=moving?Math.sin(time*11+i*Math.PI)*.55:0);d.arms.forEach((l,i)=>l.rotation.x=moving?Math.sin(time*11+i*Math.PI+Math.PI)*.35:0);if(attack>0){d.arms[1].rotation.x=-1.4+Math.sin(attack*16)*.8;d.arms[1].rotation.z=-Math.sin(attack*16)*.8;}else d.arms[1].rotation.z=0;}else if(d.legs)d.legs.forEach((l,i)=>l.rotation.x=moving?Math.sin(time*12+i*Math.PI)*.25:0);}
  project(x,y,z){const p=new T.Vector3(x,y,z).project(this.camera);return {x:(p.x+1)/2*innerWidth,y:(1-p.y)/2*innerHeight,visible:p.z<1&&Math.abs(p.x)<1.2&&Math.abs(p.y)<1.2};}
  effect(x,z,color=0xf1cd86,size=1){const m=new T.Mesh(new T.RingGeometry(.1,.25,24),new T.MeshBasicMaterial({color,transparent:true,opacity:.8,side:T.DoubleSide}));m.rotation.x=-Math.PI/2;m.position.set(x,.2,z);this.scene.add(m);this.effects.push({mesh:m,life:0,size});}
- render(s,dt,time){this.player.position.set(s.x,0,s.z);const target=new T.Vector3(s.x,this.zoom*.95,s.z+this.zoom*.8);this.camera.position.lerp(target,1-Math.exp(-dt*8));this.camera.lookAt(s.x,0,s.z-2);this.sun.position.set(s.x-25,55,s.z+20);this.sun.target.position.set(s.x,0,s.z);for(let i=this.effects.length-1;i>=0;i--){const e=this.effects[i];e.life+=dt;e.mesh.scale.setScalar(1+e.life*e.size*8);e.mesh.material.opacity=Math.max(0,.8-e.life*1.3);if(e.life>.6){this.scene.remove(e.mesh);e.mesh.geometry.dispose();e.mesh.material.dispose();this.effects.splice(i,1);}}this.renderer.render(this.scene,this.camera);}
+ skillEffect(kind,x,z,fromX=x,fromZ=z){
+  const colors={slash:0x4ad9ff,whirl:0xb47aff,charge:0xffa34a,buff:0x55ef91};
+  const color=colors[kind]||0xffffff;
+  const group=new T.Group();group.position.set(x,0,z);this.scene.add(group);
+  const ring=(radius,thickness,y,opacity=.9)=>{
+    const mesh=new T.Mesh(new T.RingGeometry(Math.max(.01,radius-thickness),radius,48),
+      new T.MeshBasicMaterial({color,transparent:true,opacity,side:T.DoubleSide,depthWrite:false,blending:T.AdditiveBlending}));
+    mesh.rotation.x=-Math.PI/2;mesh.position.y=y;group.add(mesh);return mesh;
+  };
+  const parts=[];
+  if(kind==='slash'){
+    for(let i=0;i<3;i++){const m=new T.Mesh(new T.TorusGeometry(1.6+i*.18,.065,6,38,Math.PI*.95),
+      new T.MeshBasicMaterial({color:i===0?0xffffff:color,transparent:true,opacity:.95,blending:T.AdditiveBlending,depthWrite:false}));
+      m.rotation.set(.2+i*.4,.15,i*.35);m.position.y=1.8+i*.35;group.add(m);parts.push(m);}
+    ring(1.1,.22,.16);
+  }else if(kind==='whirl'){
+    for(let i=0;i<4;i++){const m=ring(2+i*.63,.15,.25+i*.22,.8);parts.push(m);}
+    for(let i=0;i<3;i++){const torus=new T.Mesh(new T.TorusGeometry(2.1+i*.45,.09,6,48,Math.PI*1.6),
+      new T.MeshBasicMaterial({color:i===0?0xf5d4ff:color,transparent:true,opacity:.85,side:T.DoubleSide,blending:T.AdditiveBlending,depthWrite:false}));
+      torus.rotation.x=Math.PI/2.7;torus.position.y=1+i*.55;group.add(torus);parts.push(torus);}
+  }else if(kind==='charge'){
+    ring(1.3,.32,.18);
+    const dx=x-fromX,dz=z-fromZ,dist=Math.hypot(dx,dz);
+    const beam=new T.Mesh(new T.CylinderGeometry(.13,.45,Math.max(.5,dist),10,1,true),
+      new T.MeshBasicMaterial({color,transparent:true,opacity:.6,depthWrite:false,blending:T.AdditiveBlending,side:T.DoubleSide}));
+    beam.position.set(-dx/2,1.1,-dz/2);beam.rotation.z=0;
+    beam.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),new T.Vector3(dx,0,dz).normalize());group.add(beam);parts.push(beam);
+  }else{
+    for(let i=0;i<3;i++){const m=ring(1+i*.43,.13,.2+i*.75,.85);parts.push(m);}
+    const glow=new T.Mesh(new T.SphereGeometry(1.25,16,12),
+      new T.MeshBasicMaterial({color,transparent:true,opacity:.14,blending:T.AdditiveBlending,depthWrite:false}));
+    glow.position.y=1.5;group.add(glow);parts.push(glow);
+  }
+  const count=kind==='whirl'?46:kind==='buff'?34:28;
+  const geo=new T.BufferGeometry(),pos=new Float32Array(count*3),vel=[];
+  for(let i=0;i<count;i++){const a=Math.random()*Math.PI*2,r=Math.random()*(kind==='whirl'?3.2:1.5),h=Math.random()*2.3+.25;
+    pos[i*3]=Math.cos(a)*r;pos[i*3+1]=h;pos[i*3+2]=Math.sin(a)*r;
+    vel.push({a,r,h,s:.6+Math.random()*2.5});}
+  geo.setAttribute('position',new T.BufferAttribute(pos,3));
+  const points=new T.Points(geo,new T.PointsMaterial({color,size:kind==='buff'?.35:.28,transparent:true,opacity:1,depthWrite:false,blending:T.AdditiveBlending,sizeAttenuation:true}));
+  group.add(points);
+  this.effects.push({group,parts,points,vel,life:0,duration:kind==='buff'?1.45:kind==='whirl'?1.05:.75,kind});
+ }
+ render(s,dt,time){this.player.position.set(s.x,0,s.z);const target=new T.Vector3(s.x,this.zoom*.95,s.z+this.zoom*.8);this.camera.position.lerp(target,1-Math.exp(-dt*8));this.camera.lookAt(s.x,0,s.z-2);this.sun.position.set(s.x-25,55,s.z+20);this.sun.target.position.set(s.x,0,s.z);for(let i=this.effects.length-1;i>=0;i--){const e=this.effects[i];if(e.group){
+ e.life+=dt;const p=Math.min(1,e.life/e.duration),fade=Math.pow(1-p,1.3);
+ e.group.scale.setScalar(.65+p*(e.kind==='whirl'?1.1:.55));
+ e.group.rotation.y+=dt*(e.kind==='whirl'?7:e.kind==='buff'?2.5:3);
+ for(const m of e.parts){m.material.opacity=Math.min(m.material.opacity,fade*.85);if(e.kind==='buff'&&m.geometry.type==='RingGeometry')m.position.y+=dt*2;}
+ const pos=e.points.geometry.attributes.position;
+ for(let j=0;j<e.vel.length;j++){const v=e.vel[j],a=v.a+e.life*(e.kind==='whirl'?7:2);pos.setXYZ(j,Math.cos(a)*v.r, v.h+(e.kind==='buff'?1:-.25)*e.life*v.s,Math.sin(a)*v.r);}
+ pos.needsUpdate=true;e.points.material.opacity=fade;
+ if(p>=1){this.scene.remove(e.group);e.group.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});this.effects.splice(i,1);}continue;}
+ e.life+=dt;e.mesh.scale.setScalar(1+e.life*e.size*8);e.mesh.material.opacity=Math.max(0,.8-e.life*1.3);if(e.life>.6){this.scene.remove(e.mesh);e.mesh.geometry.dispose();e.mesh.material.dispose();this.effects.splice(i,1);}}this.renderer.render(this.scene,this.camera);}
  setEquipment(s){const d=this.player.userData,t=s.equipped.armor.tier;d.body.material=mat([0x647567,0x80634a,0x577e8e,0x766393,0x886646][t]);const w=s.equipped.weapon;d.sword.children[0].scale.z=1.25+w.tier*.2;d.sword.children[0].material=mat(w.plus>=7?0xe6c68a:0xd6d9ca,{emissive:w.plus>=7?0xe4ab31:0x000000,emissiveIntensity:w.plus>=7?(w.plus-6)*.65:0});}
 }
