@@ -102,7 +102,7 @@ function pickupLoot(l){const i=loots.indexOf(l);if(i<0)return false;if(Math.hypo
 function collect(){if(!started||paused)return;let n=0;for(const l of [...loots])if(pickupLoot(l))n++;if(n){sound(630);toast('Zebrano łupy · '+n+' przedmiotów','good');updateUI();save();}}
 $('#lootButton').onclick=collect;
 function nearest(){return world.mobs.filter(m=>m.alive&&Math.hypot(m.x-state.x,m.z-state.z)<12).sort((a,b)=>Math.hypot(a.x-state.x,a.z-state.z)-Math.hypot(b.x-state.x,b.z-state.z))[0];}
-function basic(){if(!started||paused||time<deathUntil)return;target??=nearest();if(!target?.alive||time<lastHit+(time<berserkUntil?.43:.72))return;if(Math.hypot(target.x-state.x,target.z-state.z)<=3){lastHit=time;world.player.rotation.y=Math.atan2(target.x-state.x,target.z-state.z);hit(target);}}
+function basic(){if(!started||paused||time<deathUntil)return;target??=nearest();if(!target?.alive||time<lastHit+(time < berserkUntil ? .43 : .72))return;if(Math.hypot(target.x-state.x,target.z-state.z)<=3){lastHit=time;world.player.rotation.y=Math.atan2(target.x-state.x,target.z-state.z);hit(target);}}
 function skill(n){
  if(activeClass()!=='warrior')return classSkill(n);
  if(!started||paused||time<deathUntil)return;
