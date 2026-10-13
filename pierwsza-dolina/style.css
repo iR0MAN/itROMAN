@@ -42,3 +42,8 @@ button.metinSlot{width:100%;height:100%;aspect-ratio:1;border-radius:2px}
 .smithAnvil{height:116px;margin:10px 0 15px;background:radial-gradient(circle,#4c3b2a,#1c1a19);border:2px dashed #c29b58;color:#e8ba73;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:42px}
 .smithAnvil small{font:12px Arial;margin-top:6px}.smithItem{cursor:grab}.smithItem span{display:flex;gap:5px;align-items:center}
 @media(max-width:800px){.metinLayout{grid-template-columns:1fr}.metinSilhouette{display:none}.metinEquipment{grid-template-columns:repeat(4,minmax(0,1fr))}.metinGear,.metinBag{padding:9px}.metinEquipCell small{font-size:9px}.metinSlot{min-height:40px}.metinGrid{grid-template-columns:repeat(8,minmax(0,1fr));gap:2px}.metinDrops{gap:5px}.metinDrop{min-height:60px;padding:5px}.metinDrop b{font-size:10px}.metinDrop small{font-size:8px}}
+
+/* Ground loot labels (Metin-like ownership) */
+.lootLabel{position:absolute;transform:translate(-50%,-100%);min-width:70px;max-width:165px;text-align:center;pointer-events:none;z-index:5;font:11px Arial,sans-serif;text-shadow:0 1px 3px #000,1px 1px 2px #000,-1px -1px 2px #000;white-space:nowrap}
+.lootLabel b{display:block;color:#f1d9ab;font-weight:600}
+.lootLabel small{display:block;color:#9ed6ed;font-size:10px;margin-top:2px}
